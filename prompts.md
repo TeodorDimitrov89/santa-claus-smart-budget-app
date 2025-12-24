@@ -44,3 +44,40 @@ Answers for the Product Brief:
 
 ---
 
+### Prompt 4
+
+Current State: Santa uses messy paper ledgers and spreadsheets, which causes chaos when reindeer feed prices spike or elf overtime is needed.
+The Gap: Generic apps lack the "North Pole" category structure and don't handle the extreme seasonal peak of December.
+The Solution: A festive, simple-to-use app. The AI feature will focus on "Smart Alerts" (e.g., "Santa, you're overspending on Decorations; move budget to Gifts to save Christmas!").
+Unfair Advantage: A tailored UI for the North Pole (Reindeer Care, Workshop Maintenance) that makes budgeting feel like part of the Christmas magic, not a chore.
+Instruction:
+Use this summary to COMPLETE the Product Brief and MVP definition now.
+DO NOT ask more discovery questions.
+Create the README.md draft with this "Santa Story" included.
+Ensure prompts.md is updated with ONLY this prompt (no response summary)
+
+---
+
+### Prompt 5
+
+Task: Finalize Phase 1 documentation with the following distribution of content.
+1. Data Logic:
+    Types: Income and Expense.
+    Examples: Salary, Bonus (Income); Gift Budget, Decorations, Travel (Expense).
+    Categories: Gifts, Food & Dinner, Decorations, Travel, Charity, Santa's Workshop.
+2. Update Product Brief (_bmad-output):
+    Move the Santa Claus fictional story and vision here. Use it to describe the problem and why this app is "magical" for the North Pole operations.
+    Include the technical logic of Income/Expense/Categories.
+3. Update README.md (Root):
+    Project Brief: Keep this section technical and concise. Focus on the core features (CRUD, Charts, AI-based suggestions) and the tech stack.
+    How to Run: Add a placeholder: "Instructions will be provided during the implementation phase."
+4. Update summary.md (Strict Exam Format):
+    Tasks used AI for: Requirements analysis, creative visioning (Santa story), and initial document structure.
+    Output accepted/modified: Kept the creative vision in the Brief but cleaned up the README for professionalism; fixed the categorization logic.
+    AI impact on speed/quality: Rapid generation of a compelling project context and technical templates.
+    Custom settings: Instruction to log only user prompts in prompts.md.
+    Problems handled: Re-organized the content to separate "storytelling" from "technical documentation" based on best practices.
+5. Constraint: Append ONLY this prompt to prompts.md
+
+---
+
