@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir)",
+      "Bash(go:*)",
+      "Write(*)",
+      "Read(*)",
+      "Bash(ls:*)",
+      "Bash(git:*)",
+      "Update(*:*)",
+      "Bash(mv:*)",
+      "Bash(echo:*)",
+      "Bash(sed:*)",
+      "Bash(source:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(pkill:*)",
+      "Bash(deadcode:*)",
+      "Bash(PORT=:*)",
+      "Update(*)",
+      "Bash(nvm:*)"
+    ],
+    "deny":[],
+    "ask": []
+  }
+
+}
