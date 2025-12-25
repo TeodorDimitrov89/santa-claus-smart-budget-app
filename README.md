@@ -32,7 +32,7 @@ Santa is preparing for Christmas, and managing the budget for gifts, elves, rein
 
 ### Tech Stack
 
-To be determined during implementation phase.
+To be determined during Solutioning phase.
 
 ### Data Model
 

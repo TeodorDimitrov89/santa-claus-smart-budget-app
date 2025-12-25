@@ -70,7 +70,7 @@ Task: Finalize Phase 1 documentation with the following distribution of content.
     Include the technical logic of Income/Expense/Categories.
 3. Update README.md (Root):
     Project Brief: Keep this section technical and concise. Focus on the core features (CRUD, Charts, AI-based suggestions) and the tech stack.
-    How to Run: Add a placeholder: "Instructions will be provided during the implementation phase."
+    How to Run: Add a placeholder: "Instructions will be provided during the Solutioning phase."
 4. Update summary.md (Strict Exam Format):
     Tasks used AI for: Requirements analysis, creative visioning (Santa story), and initial document structure.
     Output accepted/modified: Kept the creative vision in the Brief but cleaned up the README for professionalism; fixed the categorization logic.
@@ -78,6 +78,24 @@ Task: Finalize Phase 1 documentation with the following distribution of content.
     Custom settings: Instruction to log only user prompts in prompts.md.
     Problems handled: Re-organized the content to separate "storytelling" from "technical documentation" based on best practices.
 5. Constraint: Append ONLY this prompt to prompts.md
+
+---
+
+Session Started: 2025-12-25
+
+### Prompt 6
+
+/bmad:bmm:agents:pm
+Task: Start PHASE 2: Planning. Please initialize the PRD based on the existing documentation.
+Logging Rule: Append ONLY my prompts to prompts.md. No response summaries or extra text in the log.
+Once the PRD is ready and summary.md is updated, let me know.
+
+---
+
+### Prompt 7
+
+Skip dialogue. Write the full PRD in _bmad-output/planning/prd.md based on the current docs. Key requirements: CRUD for transactions, 6 fixed categories, and AI suggestions.
+Update summary.md and proceed.
 
 ---
 

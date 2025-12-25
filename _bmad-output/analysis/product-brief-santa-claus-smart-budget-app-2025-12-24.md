@@ -91,12 +91,12 @@ Focused MVP functionality (CRUD, Categories, Visualizations, Smart Alerts) that 
 
 The application supports two fundamental transaction types:
 
-**Income (Приход)**
+**Income**
 - Represents money coming into Santa's budget
 - Examples: Salary, Bonus, Donations, Sponsorships
 - Increases the total available budget
 
-**Expense (Разход)**
+**Expense**
 - Represents money being spent from Santa's budget
 - Examples: Gift Budget, Decorations, Travel, Reindeer Care, Elf Salaries, Workshop Maintenance
 - Decreases the total available budget
