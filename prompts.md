@@ -99,3 +99,14 @@ Update summary.md and proceed.
 
 ---
 
+### Prompt 8
+
+/bmad:bmm:agents:ux-designer
+
+Analyze the docs and execute "Phase 2: Create UX".
+Save to _bmad-output/planning/ux-design.md, update summary.md, and log ONLY this prompt.
+
+---
+
+---
+
