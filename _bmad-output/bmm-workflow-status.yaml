@@ -70,10 +70,10 @@ workflow_status:
           - "Structure: Flat and simple (max 2-3 levels)"
 
       - id: "create-epics-and-stories"
-        status: "required"
+        status: "_bmad-output/epics.md"
+        completed: "2025-12-26"
         agent: "pm"
-        command: "create-epics-and-stories"
-        note: "NEXT STEP: Break down PRD into implementable epics and stories with full context (PRD + UX + Architecture)"
+        output: "Complete epic breakdown with 17 implementation-ready stories (also split into individual epic files in _bmad-output/epics/)"
 
       - id: "test-design"
         status: "recommended"
@@ -106,12 +106,13 @@ workflow_status:
 # NEXT RECOMMENDED ACTION:
 # =======================
 next_workflow:
-  id: "create-epics-and-stories"
-  agent: "pm"
-  command: "/bmad:bmm:workflows:create-epics-and-stories"
-  description: "Break down PRD requirements into implementable epics and user stories"
-  context: "PRD, UX Design, and Architecture are all complete - ready to create implementation plan"
+  id: "implementation-readiness"
+  agent: "architect"
+  command: "/bmad:bmm:workflows:check-implementation-readiness"
+  description: "Validate PRD + Architecture + Epics + UX alignment before implementation phase"
+  context: "All solutioning artifacts complete - ready for final validation before sprint planning"
   inputs:
     - "_bmad-output/planning/prd.md"
     - "_bmad-output/planning/ux-design.md"
     - "_bmad-output/solutioning/architecture.md"
+    - "_bmad-output/epics.md"

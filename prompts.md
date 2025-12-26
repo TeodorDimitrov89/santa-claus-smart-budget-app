@@ -143,4 +143,70 @@ use the best practices and activate yolo
 
 ---
 
+### Prompt 14
+
+continue in yolo mode
+
+---
+
+### Prompt 15
+
+run the implementation readiness check first log this prompt to prompts.md and update summary as well
+
+---
+### Prompt 16
+
+/bmad:bmm:agents:pm
+
+---
+
+### Prompt 17
+
+/bmad:bmm:workflows:create-epics-and-stories
+Log all prompts to prompts.md
+
+---
+
+### Prompt 18
+
+I changed my mind split them in files
+
+---
+
+### Prompt 19
+
+log prompts to prompts.md
+
+---
+
+### Prompt 20
+
+Update the workflow status now
+
+---
+
+### Prompt 21
+
+/bmad:bmm:agents:architect
+
+---
+
+### Prompt 22
+
+validate-architecture and log the prompts to propmts.md
+
+---
+
+### Prompt 23
+
+Option 2: Skip to Implementation Readiness
+
+---
+
+### Prompt 24
+
+1 yes  and log all prompts
+[C]
+
+---
 
