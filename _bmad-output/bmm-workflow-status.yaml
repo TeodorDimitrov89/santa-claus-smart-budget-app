@@ -1,0 +1,117 @@
+# Workflow Status Tracker
+# This tracks progress through BMM methodology Analysis, Planning, and Solutioning phases.
+# Implementation phase is tracked separately in sprint-status.yaml
+
+# STATUS DEFINITIONS:
+# ==================
+# Initial Status (before completion):
+#   - required: Must be completed to progress
+#   - optional: Can be completed but not required
+#   - recommended: Strongly suggested but not required
+#   - conditional: Required only if certain conditions met (e.g., if_has_ui)
+#
+# Completion Status:
+#   - {file-path}: File created/found (e.g., "docs/product-brief.md")
+#   - skipped: Optional/conditional workflow that was skipped
+
+generated: "2025-12-26"
+project: "santa-claus-smart-budget-app"
+project_type: "greenfield"
+selected_track: "bmad-method"
+field_type: "greenfield"
+workflow_path: "_bmad/bmm/workflows/workflow-status/paths/method-greenfield.yaml"
+
+workflow_status:
+  # Phase 0: Discovery (Optional)
+  - phase: 0
+    name: "Discovery (Optional)"
+    workflows:
+      - id: "brainstorm-project"
+        status: "skipped"
+        note: "Not used for this project"
+
+      - id: "research"
+        status: "skipped"
+        note: "Not used for this project"
+
+      - id: "product-brief"
+        status: "_bmad-output/analysis/product-brief-santa-claus-smart-budget-app-2025-12-24.md"
+        completed: "2025-12-24"
+        agent: "analyst"
+
+  # Phase 1: Planning (Required)
+  - phase: 1
+    name: "Planning"
+    workflows:
+      - id: "prd"
+        status: "_bmad-output/planning/prd.md"
+        completed: "2025-12-25"
+        agent: "pm"
+        output: "Product Requirements Document with 10 FRs, NFRs, data model, user stories"
+
+      - id: "create-ux-design"
+        status: "_bmad-output/planning/ux-design.md"
+        completed: "2025-12-26"
+        agent: "ux-designer"
+        output: "Complete UX Design specification with wireframes, design system, accessibility guidelines"
+
+  # Phase 2: Solutioning (Required)
+  - phase: 2
+    name: "Solutioning"
+    workflows:
+      - id: "create-architecture"
+        status: "_bmad-output/solutioning/architecture.md"
+        completed: "2025-12-26"
+        agent: "architect"
+        output: "System architecture document (100% Functional, Vite+React+TypeScript, flat structure)"
+        constraints:
+          - "100% Functional Approach - NO CLASSES"
+          - "Error Handling: react-error-boundary"
+          - "Structure: Flat and simple (max 2-3 levels)"
+
+      - id: "create-epics-and-stories"
+        status: "required"
+        agent: "pm"
+        command: "create-epics-and-stories"
+        note: "NEXT STEP: Break down PRD into implementable epics and stories with full context (PRD + UX + Architecture)"
+
+      - id: "test-design"
+        status: "recommended"
+        agent: "tea"
+        command: "test-design"
+        note: "Testability assessment before gate check - auto-detects system-level mode"
+
+      - id: "validate-architecture"
+        status: "optional"
+        agent: "architect"
+        command: "validate-architecture"
+        note: "Quality check for architecture completeness"
+
+      - id: "implementation-readiness"
+        status: "required"
+        agent: "architect"
+        command: "implementation-readiness"
+        note: "Validates PRD + Architecture + Epics + UX before implementation phase"
+
+  # Phase 3: Implementation (Tracked in sprint-status.yaml)
+  - phase: 3
+    name: "Implementation"
+    workflows:
+      - id: "sprint-planning"
+        status: "pending"
+        agent: "sm"
+        command: "sprint-planning"
+        note: "Creates sprint plan - subsequent work tracked in sprint-status.yaml"
+
+# NEXT RECOMMENDED ACTION:
+# =======================
+next_workflow:
+  id: "create-epics-and-stories"
+  agent: "pm"
+  command: "/bmad:bmm:workflows:create-epics-and-stories"
+  description: "Break down PRD requirements into implementable epics and user stories"
+  context: "PRD, UX Design, and Architecture are all complete - ready to create implementation plan"
+  inputs:
+    - "_bmad-output/planning/prd.md"
+    - "_bmad-output/planning/ux-design.md"
+    - "_bmad-output/solutioning/architecture.md"

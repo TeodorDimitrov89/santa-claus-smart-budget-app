@@ -107,6 +107,40 @@ Analyze the docs and execute "Phase 2: Create UX".
 Save to _bmad-output/planning/ux-design.md, update summary.md, and log ONLY this prompt.
 
 ---
+### Prompt 9
+
+/bmad:bmm:agents:architect
 
 ---
+
+### Prompt 10
+
+I choose [2] Create an Architecture Document.
+
+But first, here are my MANDATORY architectural requirements for this project:
+1. Coding Pattern: 100% Functional Approach. NO CLASSES (no service classes, no class-based error boundaries).
+3. Error Handling: Use 'react-error-boundary' library or similar.
+4. Structure: Keep it flat and simple
+Automatically log THIS and all future prompts to prompts.md, maintaining the existing structure.
+
+---
+
+### Prompt 11
+
+[C] Continue to project context analysis
+
+---
+
+### Prompt 12
+
+[C] Continue - Save this analysis and begin architectural decisions (technology stack, patterns, structure)
+
+---
+
+### Prompt 13
+
+use the best practices and activate yolo
+
+---
+
 
