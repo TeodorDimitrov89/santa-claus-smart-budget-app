@@ -210,3 +210,24 @@ Option 2: Skip to Implementation Readiness
 
 ---
 
+Session Started: 2025-12-27
+
+### Prompt 25
+
+/bmad:bmm:workflows:workflow-status
+
+### Prompt 25
+/bmad:bmm:agents:sm
+
+---
+
+### Prompt 26
+
+1. Generate or re-generate sprint-status.yaml from epic files (Required after Epics+Stories are created)
+
+---
+
+### Prompt 27
+
+Before we continue I want you to update the summary.md
+
