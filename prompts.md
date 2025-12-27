@@ -231,3 +231,50 @@ Session Started: 2025-12-27
 
 Before we continue I want you to update the summary.md
 
+---
+
+### Prompt 28
+
+/bmad:bmm:workflows:create-story
+
+---
+
+### Prompt 29
+
+*validate-create-story
+
+---
+
+### Prompt 30
+
+/bmad:bmm:agents:dev don't forget to log all prompts to prompts.md and update summary.md (keep the file format)
+
+---
+
+### Prompt 31
+
+Execute Dev Story workflow
+
+---
+
+### Prompt 32
+
+Stop and Re-align: Version Mismatch Detected. Context: You initialized the project with React 19, but our Architecture Document and PRD strictly mandate React 18.x. For an exam project, following the approved technical specification is mandatory for consistency and grading. Task: Re-initialize or downgrade the project to React 18.3.1. Log all prompts to prompts.md and update summary.md after that (keep the same format)
+
+---
+
+### Prompt 33
+
+/bmad:bmm:workflows:sprint-status
+
+---
+
+### Prompt 34
+
+Run recommended workflow now and log all prompts to prompts.md and update summary.md
+
+---
+
+### Prompt 35
+
+I have moved all files and folder to the root directory . Mark this story as completed
