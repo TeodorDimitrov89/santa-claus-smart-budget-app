@@ -278,3 +278,28 @@ Run recommended workflow now and log all prompts to prompts.md and update summar
 ### Prompt 35
 
 I have moved all files and folder to the root directory . Mark this story as completed
+
+---
+
+Session Started: 2025-12-28
+---
+
+### Prompt 36
+
+Please generate the remaining backlog stories for Epic 1 (from ST-1-2 to ST-1-6) log propmpts to prompts.md and update the summary.md keep the file format
+
+### Prompt 37
+
+/bmad:bmm:agents:dev
+
+### Prompt 38
+Execute Dev Story workflow (full BMM path with sprint-status)
+---
+
+### Prompt 37
+
+"The Code Review for ST-1-2 FAILED due to major version drift (Tailwind 4, Vite 7, Router 7). I have manually rolled back package.json to the approved versions (Tailwind 3, React 18.3.1, Router 6, Zod 3) to restore stability and architectural compliance.
+
+Action: > 1. Acknowledge the new package.json. 2. Ensure tailwind.config.js and PostCSS are using the v3 standard. 3. Mark ST-1-2 as DONE. 4. Move directly to ST-1-3 (Database Schema) using the correct Zod 3 and Dexie 4 types.
+
+NO MORE version upgrades. Stick to the fixed versions." Log promps to prompts.md and update summary.md
