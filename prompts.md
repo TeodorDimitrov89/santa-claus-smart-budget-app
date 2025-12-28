@@ -333,3 +333,15 @@ User invoked `/bmad:bmm:workflows:dev-story` workflow to continue with next read
 ### Prompt 40
 
 Log all prompts in prompts.md (keep the format with no additional text just propmpt) mark story 1-5 as done and update summary.md
+
+---
+
+### Prompt 41
+
+Log all prompts to prompts.md (keep the current format no extra text) and continue with story 1-6
+
+---
+
+### Prompt 42
+
+let's skip the epic-1-retrospective mark the epic 1 as done and log the prompts (don't change the format , only prompt no extra text).
