@@ -303,3 +303,20 @@ Execute Dev Story workflow (full BMM path with sprint-status)
 Action: > 1. Acknowledge the new package.json. 2. Ensure tailwind.config.js and PostCSS are using the v3 standard. 3. Mark ST-1-2 as DONE. 4. Move directly to ST-1-3 (Database Schema) using the correct Zod 3 and Dexie 4 types.
 
 NO MORE version upgrades. Stick to the fixed versions." Log promps to prompts.md and update summary.md
+
+
+### Prompt 38
+
+continue with story 1.4
+
+
+### Prompt 39
+
+The review has already been made read the @1-4-create-base-project-structure-and-navigation.md especially [ ] Review Follow-ups (AI) and fix the review feedback
+---
+
+### Prompt 38
+
+"The review is already been made read the @1-4-create-base-project-structure-and-navigation.md especially [ ] Review Follow-ups (AI) and fix the review feedback"
+
+

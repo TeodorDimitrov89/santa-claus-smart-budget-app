@@ -1,10 +1,20 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/layout/Layout';
+import Dashboard from './pages/Dashboard';
+import Transactions from './pages/Transactions';
+import Categories from './pages/Categories';
+
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-christmas-red to-christmas-green flex items-center justify-center">
-      <h1 className="text-6xl font-heading text-christmas-gold">
-        🎅 Santa's Budget App
-      </h1>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/categories" element={<Categories />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
 
