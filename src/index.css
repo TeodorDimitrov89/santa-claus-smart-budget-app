@@ -5,11 +5,34 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply font-body;
+    @apply font-body text-gray-900;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    @apply font-heading text-christmas-green;
+  }
+}
+
+@layer components {
+  .festive-border {
+    @apply border-2 border-christmas-gold rounded-lg shadow-md;
+  }
+
+  .festive-card {
+    @apply bg-white border-2 border-christmas-red/20 rounded-xl shadow-lg p-6;
+  }
+
+  .festive-button {
+    @apply bg-christmas-red text-white font-semibold px-6 py-3 rounded-lg
+           hover:bg-christmas-red-dark transition-colors shadow-md;
+  }
+
+  .festive-gradient {
+    @apply bg-gradient-to-br from-christmas-red via-christmas-green to-christmas-gold;
   }
 }

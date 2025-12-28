@@ -320,3 +320,16 @@ The review has already been made read the @1-4-create-base-project-structure-and
 "The review is already been made read the @1-4-create-base-project-structure-and-navigation.md especially [ ] Review Follow-ups (AI) and fix the review feedback"
 
 
+
+---
+
+### Prompt 39
+
+User invoked `/bmad:bmm:workflows:dev-story` workflow to continue with next ready story.
+
+
+---
+
+### Prompt 40
+
+Log all prompts in prompts.md (keep the format with no additional text just propmpt) mark story 1-5 as done and update summary.md
