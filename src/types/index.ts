@@ -30,6 +30,18 @@ export interface Transaction {
 }
 
 /**
+ * Form data for transaction input
+ * Used by TransactionForm component
+ */
+export interface TransactionFormData {
+  amount: string; // String from input, validate to positive number
+  type: TransactionType | '';
+  category: Category | '';
+  date: Date | null;
+  description: string;
+}
+
+/**
  * Filter state for transaction list
  */
 export interface FilterState {

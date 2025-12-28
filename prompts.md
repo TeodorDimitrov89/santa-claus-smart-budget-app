@@ -345,3 +345,21 @@ Log all prompts to prompts.md (keep the current format no extra text) and contin
 ### Prompt 42
 
 let's skip the epic-1-retrospective mark the epic 1 as done and log the prompts (don't change the format , only prompt no extra text).
+
+### Prompt 43
+
+/bmad:bmm:agents:sm
+
+### Prompt 44
+
+/bmad:bmm:workflows:sprint-status
+
+### Prompt 45
+
+/bmad:bmm:workflows:create-story
+
+### Prompt 46
+/bmad:bmm:agents:dev
+
+### Prompt 47
+you can mark Manual Testing Checklist as done. I tested it

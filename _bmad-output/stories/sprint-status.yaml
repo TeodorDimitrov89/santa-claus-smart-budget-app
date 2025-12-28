@@ -51,8 +51,8 @@ development_status:
   epic-1-retrospective: optional
 
   # Epic 2: Transaction Management
-  epic-2: backlog
-  2-1-create-transaction-form-with-validation: backlog
+  epic-2: in-progress
+  2-1-create-transaction-form-with-validation: done
   2-2-display-transaction-list-with-filtering-and-search: backlog
   2-3-edit-existing-transaction: backlog
   2-4-delete-transaction-with-confirmation: backlog
