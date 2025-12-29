@@ -41,6 +41,9 @@
 - Story 2.2: Transaction list with filtering, search, and pagination
 - Story 2.3: Edit existing transaction with date field fix
 - Story 2.4: Delete transaction with confirmation dialog
+- Story 2.5: Predefined categories system with helpers and tests
+- Categories route removal (immutable categories don't need dedicated page)
+- Epic 2 completion: All transaction management features done (132 tests passing)
 
 ---
 
@@ -52,8 +55,9 @@
 - UX Design document with Christmas theme and wireframes
 - Architecture document (793 lines) with 100% functional approach
 - All story specifications with comprehensive dev notes
-- All implemented code for Stories 1.1-1.6, 2.1-2.4
-- Test suites (107 tests passing)
+- All implemented code for Stories 1.1-1.6, 2.1-2.5
+- Test suites (132 tests passing)
+- Category helper utilities and comprehensive test coverage
 
 ### Modified
 - README.md: Removed storytelling, kept technical focus
@@ -66,6 +70,7 @@
 - Vitest version: Downgraded v4.0.16 → v2.1.9 (v4 test discovery bug)
 - Date validation: Changed max() → refine() for millisecond precision handling
 - Test performance: Changed type() → paste() for long strings (500+ chars)
+- Categories route: Removed from App.tsx and Header.tsx (categories are immutable constants)
 
 ---
 
@@ -82,10 +87,11 @@
 ### Quality Impact
 - **Architecture Enforcement**: 100% functional constraint maintained (no classes except Dexie)
 - **Comprehensive Documentation**: Each story includes 200-400 lines of dev notes with code examples
-- **Test Coverage**: 107/107 tests passing (100% success rate)
+- **Test Coverage**: 132/132 tests passing (100% success rate)
 - **Version Control**: Adversarial code review caught version drift before integration
 - **Accessibility**: Proper ARIA attributes, keyboard navigation, screen reader support
 - **Real-time Reactivity**: useLiveQuery ensures instant UI updates on database changes
+- **Single Source of Truth**: CATEGORIES constant with helper utilities prevents data duplication
 
 ---
 
@@ -222,3 +228,9 @@
 **Issue**: Type 'ForwardRefExoticComponent<...>' is not assignable to type 'ReactNode'
 **Solution**: Changed {category?.icon} to {category?.icon && <category.icon className="w-4 h-4 text-gray-500" />}
 **Outcome**: Build successful, TransactionSummary renders correctly
+
+### Problem 22: Unnecessary Categories Page
+**Issue**: Categories route created in Story 1.4 but no story/epic for implementation
+**Solution**: Removed Categories route from App.tsx and navigation link from Header.tsx
+**Rationale**: Categories are immutable constants per Story 2.5 requirements (no add/edit/delete)
+**Outcome**: Clean navigation with only Dashboard and Transactions pages

@@ -51,7 +51,7 @@ export const TransactionModal = ({
     try {
       const result = editTransaction
         ? await updateTransaction(editTransaction.id, data)
-        : await createTransaction(data);
+        : await createTransaction(data as any);
 
       if (result.ok) {
         const successMessage = editTransaction

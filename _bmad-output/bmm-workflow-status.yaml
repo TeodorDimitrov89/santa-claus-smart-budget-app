@@ -107,17 +107,30 @@ workflow_status:
         note: "Sprint status file generated with 3 epics, 17 stories - subsequent work tracked in sprint-status.yaml"
         output: "Sprint status initialized: 3 epics, 17 stories, all in backlog"
 
+      - id: "epic-2-transaction-management"
+        status: "done"
+        completed: "2025-12-29"
+        stories_completed: 5
+        tests: "132 tests passing"
+        note: "Epic 2 complete: All transaction management features implemented (create, list, filter, edit, delete, categories)"
+        stories:
+          - "2-1-create-transaction-form-with-validation: done"
+          - "2-2-display-transaction-list-with-filtering-and-search: done"
+          - "2-3-edit-existing-transaction: done"
+          - "2-4-delete-transaction-with-confirmation: done"
+          - "2-5-implement-predefined-categories-system: done"
+
 # NEXT RECOMMENDED ACTION:
 # =======================
 next_workflow:
   id: "create-story"
   agent: "sm"
   command: "/bmad:bmm:workflows:create-story"
-  description: "Create first story file (1-1) to begin implementation"
-  context: "Sprint planning complete. Ready to prepare stories for development."
+  description: "Create first story file for Epic 3 (Budget Visibility & Analytics)"
+  context: "Epic 2 complete. Ready to start Epic 3: Budget Visibility & Analytics with 6 stories for dashboard, balance, and charts."
   inputs:
     - "_bmad-output/planning/prd.md"
     - "_bmad-output/planning/ux-design.md"
     - "_bmad-output/solutioning/architecture.md"
-    - "_bmad-output/epics.md"
+    - "_bmad-output/epics/epic-3-budget-visibility-and-analytics.md"
     - "_bmad-output/stories/sprint-status.yaml"

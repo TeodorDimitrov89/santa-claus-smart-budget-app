@@ -5,50 +5,61 @@ import {
   Sparkles,
   Plane,
   Heart,
-  Hammer,
+  Wrench,
+  type LucideIcon,
 } from 'lucide-react';
+
+/**
+ * Category metadata type
+ */
+export type CategoryData = {
+  name: Category;
+  description: string;
+  icon: LucideIcon;
+  color: string;
+};
 
 /**
  * Predefined transaction categories (immutable)
  * [FR-005: 6 predefined, immutable categories]
  * [Source: _bmad-output/epics/epic-2-transaction-management.md#Story 2.5]
  */
-export const CATEGORIES = [
+export const CATEGORIES: readonly CategoryData[] = [
   {
-    name: 'Gifts' as Category,
+    name: 'Gifts',
     description: "Budget allocated for children's presents",
     icon: Gift,
-    color: 'christmas-red' as const,
+    color: '#C41E3A', // Christmas red
   },
   {
-    name: 'Food & Dinner' as Category,
+    name: 'Food & Dinner',
     description: 'Meals for elves, reindeer feed, holiday feasts',
     icon: UtensilsCrossed,
-    color: 'christmas-green' as const,
+    color: '#165B33', // Christmas green
   },
   {
-    name: 'Decorations' as Category,
+    name: 'Decorations',
     description: 'North Pole decorations, workshop festive setup',
     icon: Sparkles,
-    color: 'christmas-gold' as const,
+    color: '#FFD700', // Gold
   },
   {
-    name: 'Travel' as Category,
+    name: 'Travel',
     description: 'Sleigh maintenance, reindeer transportation costs',
     icon: Plane,
-    color: 'christmas-red' as const,
+    color: '#4169E1', // Royal blue
   },
   {
-    name: 'Charity' as Category,
+    name: 'Charity',
     description: 'Community giving, support for those in need',
     icon: Heart,
-    color: 'christmas-green' as const,
+    color: '#FF69B4', // Hot pink
   },
   {
-    name: "Santa's Workshop" as Category,
+    name: "Santa's Workshop",
     description: 'Workshop operations, tools, elf salaries, maintenance',
-    icon: Hammer,
-    color: 'christmas-gold' as const,
+    icon: Wrench,
+    color: '#8B4513', // Saddle brown
   },
 ] as const;
 
@@ -57,10 +68,3 @@ export const CATEGORIES = [
  * [FR-001: Description max 500 characters]
  */
 export const MAX_DESCRIPTION_LENGTH = 500;
-
-/**
- * Helper to get category metadata
- */
-export const getCategoryInfo = (categoryName: Category) => {
-  return CATEGORIES.find((cat) => cat.name === categoryName);
-};

@@ -129,7 +129,7 @@ export const TransactionForm = ({
             Select Category
           </option>
           {CATEGORIES.map((cat) => (
-            <option key={cat.name} value={cat.name}>
+            <option key={cat.name} value={cat.name} title={cat.description}>
               {cat.name}
             </option>
           ))}

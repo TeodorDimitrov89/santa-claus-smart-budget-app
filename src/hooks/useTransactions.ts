@@ -2,7 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../lib/db';
 import { ok, err } from '../lib/result';
 import type { Result } from '../lib/result';
-import type { Transaction, TransactionType } from '../types';
+import type { Transaction, TransactionType, Category } from '../types';
 import type { TransactionInput } from '../lib/validation';
 
 /**
@@ -55,6 +55,7 @@ export const updateTransaction = async (
   try {
     const updated = await db.transactions.update(id, {
       ...data,
+      category: data.category as Category,
       updatedAt: new Date(),
     });
 

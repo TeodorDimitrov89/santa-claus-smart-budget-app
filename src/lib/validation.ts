@@ -1,4 +1,10 @@
 import { z } from 'zod';
+import { CATEGORIES } from './constants';
+
+/**
+ * Derive category names from CATEGORIES constant (single source of truth)
+ */
+const categoryNames = CATEGORIES.map((c) => c.name) as [string, ...string[]];
 
 /**
  * Transaction validation schema
@@ -15,19 +21,9 @@ export const transactionSchema = z.object({
     errorMap: () => ({ message: 'Must select Income or Expense' }),
   }),
 
-  category: z.enum(
-    [
-      'Gifts',
-      'Food & Dinner',
-      'Decorations',
-      'Travel',
-      'Charity',
-      "Santa's Workshop",
-    ],
-    {
-      errorMap: () => ({ message: 'Must select a category' }),
-    }
-  ),
+  category: z.enum(categoryNames, {
+    errorMap: () => ({ message: 'Please select a valid category' }),
+  }),
 
   date: z
     .date({ invalid_type_error: 'Date is required' })

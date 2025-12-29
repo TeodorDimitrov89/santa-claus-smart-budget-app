@@ -250,4 +250,72 @@ describe('TransactionForm', () => {
     const descriptionLabel = screen.getByLabelText(/description/i);
     expect(descriptionLabel).toBeInTheDocument();
   });
+
+  it('should display all 6 predefined categories in dropdown', () => {
+    const mockOnSubmit = vi.fn();
+    const mockOnCancel = vi.fn();
+    render(
+      <TransactionForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+    );
+
+    const categorySelect = screen.getByLabelText(/category/i);
+    const options = categorySelect.querySelectorAll('option');
+
+    // Expect 7 options: 1 placeholder + 6 categories
+    expect(options).toHaveLength(7);
+
+    // Check that all 6 categories are present
+    expect(screen.getByRole('option', { name: 'Gifts' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', { name: 'Food & Dinner' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', { name: 'Decorations' })
+    ).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Travel' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', { name: 'Charity' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', { name: "Santa's Workshop" })
+    ).toBeInTheDocument();
+  });
+
+  it('should show category descriptions as tooltips', () => {
+    const mockOnSubmit = vi.fn();
+    const mockOnCancel = vi.fn();
+    render(
+      <TransactionForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+    );
+
+    const categorySelect = screen.getByLabelText(/category/i);
+    const giftsOption = categorySelect.querySelector('option[value="Gifts"]');
+
+    expect(giftsOption).toHaveAttribute(
+      'title',
+      "Budget allocated for children's presents"
+    );
+  });
+
+  it('should require category selection for form submission', async () => {
+    const mockOnSubmit = vi.fn();
+    const mockOnCancel = vi.fn();
+    render(
+      <TransactionForm onSubmit={mockOnSubmit} onCancel={mockOnCancel} />
+    );
+
+    const user = userEvent.setup();
+
+    // Fill only required fields except category
+    const amountInput = screen.getByLabelText(/amount/i);
+    const typeSelect = screen.getByLabelText(/type/i);
+    const dateInput = screen.getByLabelText(/date/i);
+
+    await user.type(amountInput, '100');
+    await user.selectOptions(typeSelect, 'Expense');
+    await user.type(dateInput, '2025-12-25');
+
+    const submitButton = screen.getByRole('button', { name: /save/i });
+    expect(submitButton).toBeDisabled(); // Form invalid without category
+  });
 });

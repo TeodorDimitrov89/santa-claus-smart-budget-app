@@ -51,12 +51,12 @@ development_status:
   epic-1-retrospective: optional
 
   # Epic 2: Transaction Management
-  epic-2: in-progress
+  epic-2: done
   2-1-create-transaction-form-with-validation: done
   2-2-display-transaction-list-with-filtering-and-search: done
   2-3-edit-existing-transaction: done
   2-4-delete-transaction-with-confirmation: done
-  2-5-implement-predefined-categories-system: ready-for-dev
+  2-5-implement-predefined-categories-system: done
   epic-2-retrospective: optional
 
   # Epic 3: Budget Visibility & Analytics

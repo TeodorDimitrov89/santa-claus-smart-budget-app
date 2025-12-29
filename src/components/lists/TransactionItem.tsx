@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { Pencil, Trash2 } from 'lucide-react';
-import { getCategoryInfo } from '../../lib/constants';
+import { CATEGORIES } from '../../lib/constants';
 import type { Transaction } from '../../types';
 
 type TransactionItemProps = {
@@ -11,7 +11,7 @@ type TransactionItemProps = {
 
 export const TransactionItem = ({ transaction, onEdit, onDelete }: TransactionItemProps) => {
   const { amount, type, category, date, description } = transaction;
-  const categoryInfo = getCategoryInfo(category);
+  const categoryData = CATEGORIES.find((c) => c.name === category);
 
   const isIncome = type === 'Income';
   const amountClass = isIncome ? 'text-green-600' : 'text-red-600';
@@ -26,7 +26,7 @@ export const TransactionItem = ({ transaction, onEdit, onDelete }: TransactionIt
       ? `${description.substring(0, 50)}...`
       : description;
 
-  const CategoryIcon = categoryInfo?.icon;
+  const CategoryIcon = categoryData?.icon;
 
   return (
     <div
@@ -45,11 +45,22 @@ export const TransactionItem = ({ transaction, onEdit, onDelete }: TransactionIt
       </div>
 
       {/* Category Badge */}
-      <div className="flex items-center gap-2">
-        {CategoryIcon && (
-          <CategoryIcon className="w-4 h-4 text-gray-500" aria-hidden="true" />
+      <div className="flex items-center">
+        {categoryData ? (
+          <div
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium"
+            style={{
+              backgroundColor: `${categoryData.color}20`,
+              color: categoryData.color,
+            }}
+            title={categoryData.description}
+          >
+            {CategoryIcon && <CategoryIcon className="w-4 h-4" aria-hidden="true" />}
+            <span>{category}</span>
+          </div>
+        ) : (
+          <span className="text-sm font-medium text-gray-700">{category}</span>
         )}
-        <span className="text-sm font-medium text-gray-700">{category}</span>
       </div>
 
       {/* Amount */}

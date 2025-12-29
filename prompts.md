@@ -381,3 +381,13 @@ read the feedback for story 2-3 in Review Follow-ups (AI) and fix it
 
 ### Prompt 53
 everything is marked as done in 2-3; let's move to story 2-4
+
+### Prompt 54
+
+/bmad:bmm:workflows:sprint-status
+
+### Prompt 55
+/bmad:bmm:workflows:dev-story
+
+### Prompt 56
+The code review for 2-5 story is done, update sprint-status and bmm-workflo-status
