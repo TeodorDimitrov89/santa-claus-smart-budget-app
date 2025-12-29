@@ -8,6 +8,7 @@ export default function Header() {
   const navLinks = [
     { to: '/', label: 'Dashboard' },
     { to: '/transactions', label: 'Transactions' },
+    { to: '/categories', label: 'Categories' },
   ];
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>

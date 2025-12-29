@@ -448,3 +448,42 @@ Create action items - Add to story Tasks/Subtasks for later (GEMINI)
 ### Prompt 73
 
 There is a feedback from the reviewer check @_bmad-output/stories/3-2-color-coded-balance-status-indicators.md (section Review Follow-ups (AI)) and fix
+
+### Prompt 74
+
+/bmad:bmm:agents:sm
+
+### Prompt 75
+
+Create Story - Create Story (Required to prepare stories for development)
+
+### Prompt 76
+
+ *validate-create-story - Validate Story (Highly Recommended, use fresh context and different LLM for best results) (GEMINI)
+
+### Prompt 77
+
+/bmad:bmm:agents:dev
+
+### Prompt 78
+
+all - Apply all suggested improvements (Critical: Integration Test; Enhancements: Date Range Filter, Empty State; Optimizations: Type Safety) (GEMINI)
+
+### Prompt 79
+
+Execute Dev Story workflow (full BMM path with sprint-status)
+
+### Prompt 80
+ *code-review - Perform a thorough clean context code review (Highly Recommended, use fresh context and different LLM) (GEMINI)
+
+### Prompt 81
+Create action items - Add to story Tasks/Subtasks for later (GEMINI)
+
+### Prompt 82
+check the @_bmad-output/stories/3-3-category-aggregations-and-analysis.md for the feedback Review Follow-ups (AI) 
+
+### Prompt 83
+Create action items - Add to story Tasks/Subtasks for later. (GEMINI)
+
+### Prompt 84
+check again the story @_bmad-output/stories/3-3-category-aggregations-and-analysis.md  and check Review Follow-ups (AI)

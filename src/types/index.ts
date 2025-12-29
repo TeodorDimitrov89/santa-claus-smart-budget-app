@@ -70,3 +70,23 @@ export interface BudgetSummary {
     }
   >;
 }
+
+/**
+ * Category aggregation summary for analytics
+ * [FR-006: Category-Based Analysis]
+ * [Source: Story 3.3 - Category Aggregations and Analysis]
+ */
+export interface CategorySummary {
+  category: Category;
+  totalIncome: number;
+  totalExpense: number;
+  netAmount: number; // totalIncome - totalExpense
+  percentage: number; // (totalExpense / grandTotalExpenses) * 100
+  transactionCount: number; // Number of transactions in category
+}
+
+/**
+ * Sort options for category aggregation table
+ */
+export type CategorySortField = 'name' | 'expense' | 'percentage';
+export type CategorySortDirection = 'asc' | 'desc';

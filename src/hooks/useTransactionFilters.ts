@@ -45,6 +45,27 @@ export const useTransactionFilters = () => {
       );
   }, [allTransactions, filters]);
 
+  // For aggregation context: same as filteredTransactions but ignores category filter
+  // This ensures aggregation table shows all categories for context even when filtering
+  const transactionsWithoutCategoryFilter = useMemo(() => {
+    if (!allTransactions) return [];
+
+    return allTransactions
+      .filter((t) => filters.type === 'All' || t.type === filters.type)
+      .filter((t) => {
+        const { startDate, endDate } = filters.dateRange;
+        if (!startDate && !endDate) return true;
+        if (startDate && t.date < startDate) return false;
+        if (endDate && t.date > endDate) return false;
+        return true;
+      })
+      .filter(
+        (t) =>
+          !filters.searchQuery ||
+          t.description.toLowerCase().includes(filters.searchQuery.toLowerCase())
+      );
+  }, [allTransactions, filters.type, filters.dateRange, filters.searchQuery]);
+
   const clearFilters = () => {
     setFilters({
       type: 'All',
@@ -65,6 +86,7 @@ export const useTransactionFilters = () => {
     filters,
     setFilters,
     filteredTransactions,
+    transactionsWithoutCategoryFilter,
     clearFilters,
     hasActiveFilters,
   };

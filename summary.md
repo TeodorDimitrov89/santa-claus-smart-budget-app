@@ -46,6 +46,7 @@
 - Epic 2 completion: All transaction management features done (132 tests passing)
 - Story 3.1: Real-time budget balance calculation and display (154 tests passing)
 - Story 3.2: Color-coded balance status indicators with accessibility (163 tests passing)
+- Story 3.3: Category aggregations and analysis with filtering (210 tests passing)
 
 ---
 
@@ -57,11 +58,13 @@
 - UX Design document with Christmas theme and wireframes
 - Architecture document (793 lines) with 100% functional approach
 - All story specifications with comprehensive dev notes
-- All implemented code for Stories 1.1-1.6, 2.1-2.5, 3.1-3.2
-- Test suites (163 tests passing)
+- All implemented code for Stories 1.1-1.6, 2.1-2.5, 3.1-3.3
+- Test suites (210 tests passing)
 - Category helper utilities and comprehensive test coverage
 - Budget calculation utilities and currency formatting
 - BudgetBalanceCard component with color-coded status indicators and accessibility
+- Category aggregation system with pure functions and memoization
+- CategoryAggregationTable component with sorting and click-to-filter
 
 ### Modified
 - README.md: Removed storytelling, kept technical focus
@@ -74,7 +77,7 @@
 - Vitest version: Downgraded v4.0.16 → v2.1.9 (v4 test discovery bug)
 - Date validation: Changed max() → refine() for millisecond precision handling
 - Test performance: Changed type() → paste() for long strings (500+ chars)
-- Categories route: Removed from App.tsx and Header.tsx (categories are immutable constants)
+- Categories route: Removed from App.tsx and Header.tsx, then restored for Story 3.3 implementation
 
 ---
 
@@ -91,12 +94,14 @@
 ### Quality Impact
 - **Architecture Enforcement**: 100% functional constraint maintained (no classes except Dexie)
 - **Comprehensive Documentation**: Each story includes 200-400 lines of dev notes with code examples
-- **Test Coverage**: 163/163 tests passing (100% success rate)
+- **Test Coverage**: 210/210 tests passing (100% success rate)
 - **Version Control**: Adversarial code review caught version drift before integration
 - **Accessibility**: Proper ARIA attributes, keyboard navigation, screen reader support
 - **Real-time Reactivity**: useLiveQuery ensures instant UI updates on database changes
 - **Single Source of Truth**: CATEGORIES constant with helper utilities prevents data duplication
-- **Performance Optimization**: useMemo prevents unnecessary budget recalculations
+- **Performance Optimization**: useMemo prevents unnecessary budget and aggregation recalculations
+- **Dependency Injection**: Transaction data passed as props for maximum flexibility
+- **Pure Functions**: All aggregation logic implemented as testable pure functions
 
 ---
 
@@ -271,3 +276,24 @@
 - Added aria-live="polite" to status message for screen reader announcements
 - Deferred LOW priority items (visual consistency review, component extraction)
 **Outcome**: Improved test maintainability, enhanced accessibility for screen readers
+
+### Problem 27: Story 3.3 Category Aggregations Implementation
+**Issue**: Need to implement category aggregations and analysis with sorting, filtering, and click-to-drill-down
+**Solution**: Implemented pure aggregation functions, memoized hook, responsive table component, and Categories page integration
+**Implementation**:
+- Pure functions: aggregateByCategory(), calculateCategoryPercentage() in src/lib/categories.ts
+- Custom hook: useCategoryAggregations.ts with sort state management
+- Component: CategoryAggregationTable.tsx with desktop table and mobile cards
+- Integration: Categories.tsx page with useTransactionFilters hook
+- Test suite: 47 new tests (13 unit, 11 hook, 16 component, 7 integration)
+**Outcome**: 210 tests passing, all ACs met, responsive design with accessibility
+
+### Problem 28: Code Review Follow-ups for Story 3.3
+**Issue**: AI code review identified 5 improvements (3 HIGH, 2 MEDIUM priority)
+**Solutions**:
+- Filter Integration: Updated Categories.tsx to use useTransactionFilters instead of useTransactions
+- Row Interaction: Implemented onCategoryClick with TransactionList display below aggregation table
+- Empty State: Added festive "Start your budget journey!" message when no transactions
+- Aggregation Context: Modified useTransactionFilters to provide transactionsWithoutCategoryFilter (ignores category filter for aggregation table context)
+- Documentation: Added App.tsx and Header.tsx to FILES TO MODIFY and Change Log sections
+**Outcome**: Full filtering support, click-to-filter UX, context preservation, complete documentation
