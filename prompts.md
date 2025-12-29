@@ -399,3 +399,14 @@ The code review for 2-5 story is done, update sprint-status and bmm-workflo-stat
 Create Story (Required to prepare stories for development)
 
 ### Prompt 59
+/bmad:bmm:agents:dev
+
+### Prompt 60
+
+Execute Dev Story workflow (full BMM path with sprint-status)
+
+### Prompt 61
+Check the feedback from dev reviewer and fix it. Review Follow-ups (AI)
+
+### Prompt 62
+ everything is completed review again (GEMINI)

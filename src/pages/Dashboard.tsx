@@ -1,10 +1,14 @@
+import { BudgetBalanceCard } from '../components/budget/BudgetBalanceCard';
+
 export default function Dashboard() {
   return (
-    <div className="text-center py-12">
-      <h1 className="text-4xl font-heading text-christmas-red mb-4">
+    <div className="space-y-6">
+      <h1 className="text-4xl font-heading text-christmas-red text-center">
         🎅 Dashboard
       </h1>
-      <p className="text-lg text-gray-600">Coming Soon</p>
+
+      {/* Budget Balance - Prominent Top Placement */}
+      <BudgetBalanceCard />
     </div>
   );
 }
