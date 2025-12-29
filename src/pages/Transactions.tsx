@@ -6,11 +6,13 @@ import { TransactionModal } from '../components/modals/TransactionModal';
 import { TransactionList } from '../components/lists/TransactionList';
 import { TransactionFilters } from '../components/filters/TransactionFilters';
 import { useTransactionFilters } from '../hooks/useTransactionFilters';
+import type { Transaction } from '../types';
 
 export default function Transactions() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   // Fetch all transactions for balance calculation
   const allTransactions = useLiveQuery(() => db.transactions.toArray());
@@ -31,6 +33,21 @@ export default function Transactions() {
     setTimeout(() => setErrorMessage(''), 5000);
   };
 
+  const handleEditClick = (transaction: Transaction) => {
+    setEditingTransaction(transaction);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setEditingTransaction(null);
+  };
+
+  const handleAddClick = () => {
+    setEditingTransaction(null);
+    setIsModalOpen(true);
+  };
+
   // Calculate balance from ALL transactions (ignoring filters)
   const balance = calculateBalance(allTransactions || []);
   const balanceColor =
@@ -43,7 +60,7 @@ export default function Transactions() {
         <h1 className="text-4xl font-heading text-christmas-green">
           📋 Transactions
         </h1>
-        <button onClick={() => setIsModalOpen(true)} className="festive-button">
+        <button onClick={handleAddClick} className="festive-button">
           + Add Transaction
         </button>
       </div>
@@ -82,15 +99,19 @@ export default function Transactions() {
 
       {/* Transaction List */}
       <div className="festive-card">
-        <TransactionList transactions={filteredTransactions} />
+        <TransactionList
+          transactions={filteredTransactions}
+          onEdit={handleEditClick}
+        />
       </div>
 
       {/* Transaction Modal */}
       <TransactionModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleModalClose}
         onSuccess={handleSuccess}
         onError={handleError}
+        editTransaction={editingTransaction}
       />
     </div>
   );

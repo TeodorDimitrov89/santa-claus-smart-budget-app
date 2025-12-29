@@ -1,6 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../lib/db';
+import { ok, err } from '../lib/result';
+import type { Result } from '../lib/result';
 import type { Transaction, TransactionType } from '../types';
+import type { TransactionInput } from '../lib/validation';
 
 /**
  * Custom hook for reactive transaction queries
@@ -38,4 +41,30 @@ export const useTransactionsByType = (
     transactions: transactions ?? [],
     isLoading: transactions === undefined,
   };
+};
+
+/**
+ * Update an existing transaction
+ * Returns Result type for functional error handling
+ * [Source: Story 2.3 - Edit Existing Transaction]
+ */
+export const updateTransaction = async (
+  id: string,
+  data: TransactionInput
+): Promise<Result<void, string>> => {
+  try {
+    const updated = await db.transactions.update(id, {
+      ...data,
+      updatedAt: new Date(),
+    });
+
+    if (updated === 0) {
+      return err('Transaction not found');
+    }
+
+    return ok(undefined);
+  } catch (error) {
+    console.error('Failed to update transaction:', error);
+    return err(`Failed to update transaction: ${(error as Error).message}`);
+  }
 };

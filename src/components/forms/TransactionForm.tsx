@@ -2,32 +2,52 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { transactionSchema, type TransactionInput } from '../../lib/validation';
 import { CATEGORIES, MAX_DESCRIPTION_LENGTH } from '../../lib/constants';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface TransactionFormProps {
   onSubmit: (data: TransactionInput) => Promise<void> | void;
   onCancel: () => void;
   isSubmitting?: boolean;
+  initialData?: TransactionInput;
 }
 
 export const TransactionForm = ({
   onSubmit,
   onCancel,
   isSubmitting = false,
+  initialData,
 }: TransactionFormProps) => {
-  const [descriptionLength, setDescriptionLength] = useState(0);
+  const [descriptionLength, setDescriptionLength] = useState(
+    initialData?.description?.length || 0
+  );
 
   const {
     register,
     handleSubmit,
+    reset,
+    watch,
     formState: { errors, isValid },
   } = useForm<TransactionInput>({
     resolver: zodResolver(transactionSchema),
     mode: 'onChange', // Real-time validation
-    defaultValues: {
+    defaultValues: initialData || {
       description: '',
     },
   });
+
+  // Watch the date value to convert it for display
+  const dateValue = watch('date');
+
+  // Reset form when initialData changes (switching from create to edit mode)
+  useEffect(() => {
+    if (initialData) {
+      reset(initialData);
+      setDescriptionLength(initialData.description?.length || 0);
+    } else {
+      reset({ description: '' });
+      setDescriptionLength(0);
+    }
+  }, [initialData, reset]);
 
   const handleFormSubmit = async (data: TransactionInput) => {
     await onSubmit(data);
@@ -133,11 +153,12 @@ export const TransactionForm = ({
           id="date"
           type="date"
           max={new Date().toISOString().split('T')[0]}
+          value={dateValue ? new Date(dateValue).toISOString().split('T')[0] : ''}
           className={`w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:border-christmas-red transition-colors ${
             errors.date ? 'border-red-500' : 'border-gray-300'
           }`}
           {...register('date', {
-            valueAsDate: true,
+            setValueAs: (value) => (value ? new Date(value) : undefined),
           })}
         />
         {errors.date && (
@@ -198,7 +219,11 @@ export const TransactionForm = ({
           disabled={!isValid || isSubmitting}
           className="flex-1 festive-button disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? 'Saving...' : 'Save Transaction'}
+          {isSubmitting
+            ? 'Saving...'
+            : initialData
+            ? 'Update Transaction'
+            : 'Save Transaction'}
         </button>
       </div>
     </form>

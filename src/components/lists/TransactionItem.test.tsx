@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { TransactionItem } from './TransactionItem';
 import type { Transaction } from '../../types';
 
@@ -77,7 +78,7 @@ describe('TransactionItem', () => {
     expect(descElement).toBeInTheDocument();
   });
 
-  it('should render edit and delete button placeholders', () => {
+  it('should render edit and delete button placeholders when no handlers provided', () => {
     render(<TransactionItem transaction={mockIncomeTransaction} />);
 
     const editButton = screen.getByLabelText('Edit transaction');
@@ -97,5 +98,24 @@ describe('TransactionItem', () => {
 
     expect(editButton).toHaveAttribute('title', 'Edit (Coming in Story 2.3)');
     expect(deleteButton).toHaveAttribute('title', 'Delete (Coming in Story 2.4)');
+  });
+
+  it('should enable edit button when onEdit handler provided', () => {
+    const mockOnEdit = vi.fn();
+    render(<TransactionItem transaction={mockIncomeTransaction} onEdit={mockOnEdit} />);
+
+    const editButton = screen.getByLabelText('Edit transaction');
+    expect(editButton).not.toBeDisabled();
+  });
+
+  it('should call onEdit when edit button clicked', async () => {
+    const mockOnEdit = vi.fn();
+    render(<TransactionItem transaction={mockIncomeTransaction} onEdit={mockOnEdit} />);
+
+    const editButton = screen.getByLabelText('Edit transaction');
+    await userEvent.click(editButton);
+
+    expect(mockOnEdit).toHaveBeenCalledWith(mockIncomeTransaction);
+    expect(mockOnEdit).toHaveBeenCalledTimes(1);
   });
 });

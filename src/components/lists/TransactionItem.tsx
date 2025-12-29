@@ -5,9 +5,11 @@ import type { Transaction } from '../../types';
 
 type TransactionItemProps = {
   transaction: Transaction;
+  onEdit?: (transaction: Transaction) => void;
+  onDelete?: (transaction: Transaction) => void;
 };
 
-export const TransactionItem = ({ transaction }: TransactionItemProps) => {
+export const TransactionItem = ({ transaction, onEdit, onDelete }: TransactionItemProps) => {
   const { amount, type, category, date, description } = transaction;
   const categoryInfo = getCategoryInfo(category);
 
@@ -57,21 +59,23 @@ export const TransactionItem = ({ transaction }: TransactionItemProps) => {
         </span>
       </div>
 
-      {/* Action Buttons - Placeholders for Stories 2.3 and 2.4 */}
+      {/* Action Buttons */}
       <div className="flex justify-end gap-2">
         <button
-          className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors disabled:cursor-not-allowed"
+          onClick={() => onEdit?.(transaction)}
+          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Edit transaction"
-          disabled
-          title="Edit (Coming in Story 2.3)"
+          disabled={!onEdit}
+          title={onEdit ? "Edit transaction" : "Edit (Coming in Story 2.3)"}
         >
           <Pencil className="w-4 h-4" />
         </button>
         <button
-          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:cursor-not-allowed"
+          onClick={() => onDelete?.(transaction)}
+          className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Delete transaction"
-          disabled
-          title="Delete (Coming in Story 2.4)"
+          disabled={!onDelete}
+          title={onDelete ? "Delete transaction" : "Delete (Coming in Story 2.4)"}
         >
           <Trash2 className="w-4 h-4" />
         </button>

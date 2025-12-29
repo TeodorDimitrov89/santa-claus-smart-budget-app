@@ -5,11 +5,13 @@ import type { Transaction } from '../../types';
 
 type TransactionListProps = {
   transactions?: Transaction[];
+  onEdit?: (transaction: Transaction) => void;
+  onDelete?: (transaction: Transaction) => void;
 };
 
 const ITEMS_PER_PAGE = 50;
 
-export const TransactionList = ({ transactions = [] }: TransactionListProps) => {
+export const TransactionList = ({ transactions = [], onEdit, onDelete }: TransactionListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate pagination
@@ -51,7 +53,12 @@ export const TransactionList = ({ transactions = [] }: TransactionListProps) => 
 
       <div className="space-y-3">
         {paginatedTransactions.map((transaction) => (
-          <TransactionItem key={transaction.id} transaction={transaction} />
+          <TransactionItem
+            key={transaction.id}
+            transaction={transaction}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
         ))}
       </div>
 

@@ -372,3 +372,9 @@ you can mark Manual Testing Checklist as done. I tested it
 
 ### Prompt 50
 Execute Dev Story workflow (full BMM path with sprint-status)
+
+### Prompt 51
+let's continue with story 2-3-edit-existing-transaction
+
+### Prompt 52
+read the feedback for story 2-3 in Review Follow-ups (AI) and fix it

@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { TransactionForm } from '../forms/TransactionForm';
 import { createTransaction } from '../../lib/transaction-helpers';
+import { updateTransaction } from '../../hooks/useTransactions';
 import type { TransactionInput } from '../../lib/validation';
+import type { Transaction } from '../../types';
 
 interface TransactionModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: (message: string) => void;
   onError?: (error: string) => void;
+  editTransaction?: Transaction | null;
 }
 
 export const TransactionModal = ({
@@ -15,8 +18,12 @@ export const TransactionModal = ({
   onClose,
   onSuccess,
   onError,
+  editTransaction,
 }: TransactionModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const mode = editTransaction ? 'edit' : 'create';
+  const modalTitle = mode === 'edit' ? '✏️ Edit Transaction' : '🎅 Add Transaction';
 
   // Handle escape key press
   useEffect(() => {
@@ -42,13 +49,22 @@ export const TransactionModal = ({
     setIsSubmitting(true);
 
     try {
-      const result = await createTransaction(data);
+      const result = editTransaction
+        ? await updateTransaction(editTransaction.id, data)
+        : await createTransaction(data);
 
       if (result.ok) {
-        onSuccess('Transaction added successfully');
+        const successMessage = editTransaction
+          ? 'Transaction updated successfully'
+          : 'Transaction added successfully';
+        onSuccess(successMessage);
         onClose(); // Auto-close on success
       } else {
-        onError?.(result.error.message || 'Failed to create transaction');
+        // Handle both string and Error types for result.error
+        const errorMessage = typeof result.error === 'string'
+          ? result.error
+          : result.error?.message || 'Failed to save transaction';
+        onError?.(errorMessage);
       }
     } catch (error) {
       onError?.(
@@ -58,6 +74,17 @@ export const TransactionModal = ({
       setIsSubmitting(false);
     }
   };
+
+  // Prepare initialData for edit mode
+  const initialData = editTransaction
+    ? {
+        amount: editTransaction.amount,
+        type: editTransaction.type,
+        category: editTransaction.category,
+        date: editTransaction.date,
+        description: editTransaction.description,
+      }
+    : undefined;
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Close modal only if clicking the backdrop, not the modal content
@@ -81,13 +108,14 @@ export const TransactionModal = ({
           id="modal-title"
           className="font-heading text-2xl text-christmas-red mb-4"
         >
-          🎅 Add Transaction
+          {modalTitle}
         </h2>
 
         <TransactionForm
           onSubmit={handleSubmit}
           onCancel={onClose}
           isSubmitting={isSubmitting}
+          initialData={initialData}
         />
       </div>
     </div>
