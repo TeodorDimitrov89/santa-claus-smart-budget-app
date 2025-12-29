@@ -1,13 +1,18 @@
 import { useBudget } from '../../hooks/useBudget';
 import { formatCurrency } from '../../lib/format';
+import { getBalanceStatus } from '../../lib/budget-status';
+import { STATUS_CONFIG } from './budget-status-config';
 
 /**
  * Budget Balance Card Component
- * Displays real-time budget summary with festive styling
- * [FR-007: Budget Balance Display]
+ * Displays real-time budget summary with festive styling and color-coded status indicators
+ * [FR-007: Budget Balance Display with color-coded indicators]
  */
 export const BudgetBalanceCard = () => {
   const { totalIncome, totalExpense, balance } = useBudget();
+  const status = getBalanceStatus(balance);
+  const statusConfig = STATUS_CONFIG[status];
+  const StatusIcon = statusConfig.icon;
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
@@ -32,11 +37,19 @@ export const BudgetBalanceCard = () => {
           </p>
         </div>
 
-        {/* Current Balance */}
-        <div className="text-center p-4 bg-christmas-gold/20 rounded">
+        {/* Current Balance - Color-coded status */}
+        <div className={`text-center p-4 rounded ${statusConfig.bgColor}`}>
           <p className="text-sm text-gray-600 mb-1">Current Balance</p>
-          <p className="text-3xl font-bold text-gray-900">
-            {formatCurrency(balance)}
+
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <StatusIcon className={`w-6 h-6 ${statusConfig.textColor}`} />
+            <p className={`text-3xl font-bold ${statusConfig.textColor}`}>
+              {formatCurrency(balance)}
+            </p>
+          </div>
+
+          <p className={`text-xs ${statusConfig.textColor} mt-2`} aria-live="polite">
+            {statusConfig.message}
           </p>
         </div>
       </div>

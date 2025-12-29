@@ -425,3 +425,26 @@ Create Story - Create Story (Required to prepare stories for development)
 
 ### Prompt 67
 generate a validation report (GEMINI)
+
+### Prompt 68
+/bmad:bmm:agents:dev
+
+### Prompt 69
+
+Execute Dev Story workflow (full BMM path with sprint-status)
+
+### Prompt 70
+
+/bmad-agent-bmm-dev (GEMINI)
+
+### Prompt 71
+
+ *code-review - Perform a thorough clean context code review (Highly Recommended, use fresh context and different LLM) (GEMINI)
+
+### Prompt 72
+
+Create action items - Add to story Tasks/Subtasks for later (GEMINI)
+
+### Prompt 73
+
+There is a feedback from the reviewer check @_bmad-output/stories/3-2-color-coded-balance-status-indicators.md (section Review Follow-ups (AI)) and fix
