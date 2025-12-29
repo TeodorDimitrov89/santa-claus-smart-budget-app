@@ -410,3 +410,18 @@ Check the feedback from dev reviewer and fix it. Review Follow-ups (AI)
 
 ### Prompt 62
  everything is completed review again (GEMINI)
+
+### Prompt 63
+/bmad:bmm:agents:sm
+
+### Prompt 64
+Generate/Update Sprint Status - Generate or re-generate sprint-status.yaml from epic files
+
+### Prompt 65
+Create Story - Create Story (Required to prepare stories for development)
+
+### Prompt 66
+*validate-create-story - Validate Story (Highly Recommended, use fresh context and different LLM for best results) (GEMINI)
+
+### Prompt 67
+generate a validation report (GEMINI)

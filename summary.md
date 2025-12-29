@@ -243,3 +243,12 @@
 **Issue**: TypeScript build failed - useBudget test mocked useTransactions with non-existent properties (createTransaction, updateTransaction, deleteTransaction)
 **Solution**: Fixed mock return value to match actual useTransactions signature: { transactions, isLoading }
 **Outcome**: Build successful, all 154 tests passing
+
+### Problem 24: Code Review Follow-ups for Story 3.1
+**Issue**: AI code review identified 5 improvements (1 MEDIUM, 4 LOW priority)
+**Solutions**:
+- Fixed unsafe type casting in useBudget categoryTotals (CATEGORIES.reduce for proper initialization)
+- Optimized balance calculation to eliminate redundant iteration (compute once, reuse)
+- Parameterized formatCurrency with optional locale/currency parameters (defaults: en-US, USD)
+- Replaced CSS class assertions with behavioral testing (getByRole instead of toHaveClass)
+**Outcome**: Type-safe code, improved performance, internationalization support, better test quality
