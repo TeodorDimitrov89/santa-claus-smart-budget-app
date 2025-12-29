@@ -55,7 +55,7 @@ development_status:
   2-1-create-transaction-form-with-validation: done
   2-2-display-transaction-list-with-filtering-and-search: done
   2-3-edit-existing-transaction: done
-  2-4-delete-transaction-with-confirmation: ready-for-dev
+  2-4-delete-transaction-with-confirmation: done
   2-5-implement-predefined-categories-system: ready-for-dev
   epic-2-retrospective: optional
 

@@ -5,7 +5,10 @@ import { calculateBalance } from '../lib/budget';
 import { TransactionModal } from '../components/modals/TransactionModal';
 import { TransactionList } from '../components/lists/TransactionList';
 import { TransactionFilters } from '../components/filters/TransactionFilters';
+import { ConfirmationDialog } from '../components/modals/ConfirmationDialog';
+import { TransactionSummary } from '../components/transactions/TransactionSummary';
 import { useTransactionFilters } from '../hooks/useTransactionFilters';
+import { deleteTransaction } from '../hooks/useTransactions';
 import type { Transaction } from '../types';
 
 export default function Transactions() {
@@ -13,6 +16,7 @@ export default function Transactions() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  const [deletingTransaction, setDeletingTransaction] = useState<Transaction | null>(null);
 
   // Fetch all transactions for balance calculation
   const allTransactions = useLiveQuery(() => db.transactions.toArray());
@@ -46,6 +50,24 @@ export default function Transactions() {
   const handleAddClick = () => {
     setEditingTransaction(null);
     setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = (transaction: Transaction) => {
+    setDeletingTransaction(transaction);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deletingTransaction) return;
+
+    const result = await deleteTransaction(deletingTransaction.id);
+
+    if (result.ok) {
+      handleSuccess('Transaction deleted successfully');
+    } else {
+      handleError(result.error);
+    }
+
+    setDeletingTransaction(null);
   };
 
   // Calculate balance from ALL transactions (ignoring filters)
@@ -102,6 +124,7 @@ export default function Transactions() {
         <TransactionList
           transactions={filteredTransactions}
           onEdit={handleEditClick}
+          onDelete={handleDeleteClick}
         />
       </div>
 
@@ -112,6 +135,19 @@ export default function Transactions() {
         onSuccess={handleSuccess}
         onError={handleError}
         editTransaction={editingTransaction}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmationDialog
+        isOpen={!!deletingTransaction}
+        onClose={() => setDeletingTransaction(null)}
+        onConfirm={handleConfirmDelete}
+        title="🗑️ Delete Transaction"
+        message="Are you sure you want to delete this transaction? This action cannot be undone."
+        details={<TransactionSummary transaction={deletingTransaction} />}
+        confirmText="Delete"
+        cancelText="Cancel"
+        isDangerous={true}
       />
     </div>
   );

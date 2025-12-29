@@ -378,3 +378,6 @@ let's continue with story 2-3-edit-existing-transaction
 
 ### Prompt 52
 read the feedback for story 2-3 in Review Follow-ups (AI) and fix it
+
+### Prompt 53
+everything is marked as done in 2-3; let's move to story 2-4

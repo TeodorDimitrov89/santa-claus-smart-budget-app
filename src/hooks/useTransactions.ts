@@ -68,3 +68,27 @@ export const updateTransaction = async (
     return err(`Failed to update transaction: ${(error as Error).message}`);
   }
 };
+
+/**
+ * Delete a transaction permanently
+ * Logs deletion event with timestamp per acceptance criteria
+ * Returns Result type for functional error handling
+ * [Source: Story 2.4 - Delete Transaction with Confirmation]
+ */
+export const deleteTransaction = async (
+  id: string
+): Promise<Result<void, string>> => {
+  try {
+    await db.transactions.delete(id);
+
+    // Log deletion event per acceptance criteria
+    console.log(
+      `[DELETE] Transaction deleted at ${new Date().toISOString()}, ID: ${id}`
+    );
+
+    return ok(undefined);
+  } catch (error) {
+    console.error('Failed to delete transaction:', error);
+    return err(`Failed to delete transaction: ${(error as Error).message}`);
+  }
+};

@@ -90,14 +90,14 @@ describe('TransactionItem', () => {
     expect(deleteButton).toBeDisabled();
   });
 
-  it('should show tooltips for disabled action buttons', () => {
+  it('should show tooltips for action buttons', () => {
     render(<TransactionItem transaction={mockIncomeTransaction} />);
 
     const editButton = screen.getByLabelText('Edit transaction');
     const deleteButton = screen.getByLabelText('Delete transaction');
 
-    expect(editButton).toHaveAttribute('title', 'Edit (Coming in Story 2.3)');
-    expect(deleteButton).toHaveAttribute('title', 'Delete (Coming in Story 2.4)');
+    expect(editButton).toHaveAttribute('title', 'Edit transaction');
+    expect(deleteButton).toHaveAttribute('title', 'Delete transaction');
   });
 
   it('should enable edit button when onEdit handler provided', () => {

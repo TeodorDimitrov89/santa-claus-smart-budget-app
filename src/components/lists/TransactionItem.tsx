@@ -66,7 +66,7 @@ export const TransactionItem = ({ transaction, onEdit, onDelete }: TransactionIt
           className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Edit transaction"
           disabled={!onEdit}
-          title={onEdit ? "Edit transaction" : "Edit (Coming in Story 2.3)"}
+          title="Edit transaction"
         >
           <Pencil className="w-4 h-4" />
         </button>
@@ -75,7 +75,7 @@ export const TransactionItem = ({ transaction, onEdit, onDelete }: TransactionIt
           className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           aria-label="Delete transaction"
           disabled={!onDelete}
-          title={onDelete ? "Delete transaction" : "Delete (Coming in Story 2.4)"}
+          title="Delete transaction"
         >
           <Trash2 className="w-4 h-4" />
         </button>

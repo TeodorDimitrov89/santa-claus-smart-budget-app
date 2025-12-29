@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { updateTransaction } from './useTransactions';
+import { updateTransaction, deleteTransaction } from './useTransactions';
 import { db } from '../lib/db';
 import type { TransactionInput } from '../lib/validation';
 
@@ -8,6 +8,7 @@ vi.mock('../lib/db', () => ({
   db: {
     transactions: {
       update: vi.fn(),
+      delete: vi.fn(),
     },
   },
 }));
@@ -90,6 +91,56 @@ describe('useTransactions', () => {
         description: validTransactionInput.description,
         updatedAt: expect.any(Date),
       });
+    });
+  });
+
+  describe('deleteTransaction', () => {
+    const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+    beforeEach(() => {
+      consoleLogSpy.mockClear();
+    });
+
+    it('should delete transaction and return ok result', async () => {
+      vi.mocked(db.transactions.delete).mockResolvedValue();
+
+      const result = await deleteTransaction('test-id');
+
+      expect(result.ok).toBe(true);
+      expect(db.transactions.delete).toHaveBeenCalledWith('test-id');
+    });
+
+    it('should log deletion event with timestamp and ID', async () => {
+      vi.mocked(db.transactions.delete).mockResolvedValue();
+
+      await deleteTransaction('test-id');
+
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        expect.stringMatching(/\[DELETE\] Transaction deleted at .+, ID: test-id/)
+      );
+    });
+
+    it('should return ok result even if transaction does not exist', async () => {
+      // Dexie does not error on delete of non-existent ID
+      vi.mocked(db.transactions.delete).mockResolvedValue();
+
+      const result = await deleteTransaction('non-existent-id');
+
+      expect(result.ok).toBe(true);
+    });
+
+    it('should return error when database operation fails', async () => {
+      vi.mocked(db.transactions.delete).mockRejectedValue(
+        new Error('Database connection failed')
+      );
+
+      const result = await deleteTransaction('test-id');
+
+      expect(result.ok).toBe(false);
+      if (!result.ok) {
+        expect(result.error).toContain('Failed to delete transaction');
+        expect(result.error).toContain('Database connection failed');
+      }
     });
   });
 });

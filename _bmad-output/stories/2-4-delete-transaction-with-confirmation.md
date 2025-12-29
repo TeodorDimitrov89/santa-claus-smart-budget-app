@@ -43,9 +43,9 @@ So that I can remove duplicate or erroneous entries.
 
 ## Tasks / Subtasks
 
-- [ ] Create Confirmation Dialog Component (AC: Dialog with transaction details)
-  - [ ] Create `src/components/modals/ConfirmationDialog.tsx`
-  - [ ] Accept props:
+- [x] Create Confirmation Dialog Component (AC: Dialog with transaction details)
+  - [x] Create `src/components/modals/ConfirmationDialog.tsx`
+  - [x] Accept props:
     - `isOpen: boolean`
     - `onClose: () => void`
     - `onConfirm: () => void`
@@ -55,24 +55,24 @@ So that I can remove duplicate or erroneous entries.
     - `confirmText?: string` (default: "Delete")
     - `cancelText?: string` (default: "Cancel")
     - `isDangerous?: boolean` (applies red styling for destructive actions)
-  - [ ] Render modal overlay with backdrop
-  - [ ] Display title, message, and optional details section
-  - [ ] Render Cancel and Confirm buttons
-  - [ ] Apply festive styling with Christmas theme
-  - [ ] Add danger styling when `isDangerous` is true (red button for Delete)
-  - [ ] Handle Escape key to close dialog (same as Cancel)
-  - [ ] Handle backdrop click to close dialog (same as Cancel)
+  - [x] Render modal overlay with backdrop
+  - [x] Display title, message, and optional details section
+  - [x] Render Cancel and Confirm buttons
+  - [x] Apply festive styling with Christmas theme
+  - [x] Add danger styling when `isDangerous` is true (red button for Delete)
+  - [x] Handle Escape key to close dialog (same as Cancel)
+  - [x] Handle backdrop click to close dialog (same as Cancel)
 
-- [ ] Add Delete Button to TransactionItem (AC: Click Delete to open confirmation)
-  - [ ] Modify `src/components/lists/TransactionItem.tsx` (if not already done in Story 2.3)
-  - [ ] Add delete button with trash icon from `lucide-react`: `<Trash2 className="w-4 h-4" />`
-  - [ ] Apply festive button styling with red/danger color
-  - [ ] Add `onClick` handler that calls parent callback with transaction
-  - [ ] Ensure button has ARIA label: `aria-label="Delete transaction"`
-  - [ ] Position button next to Edit button in action column
+- [x] Add Delete Button to TransactionItem (AC: Click Delete to open confirmation)
+  - [x] Modify `src/components/lists/TransactionItem.tsx` (if not already done in Story 2.3)
+  - [x] Add delete button with trash icon from `lucide-react`: `<Trash2 className="w-4 h-4" />`
+  - [x] Apply festive button styling with red/danger color
+  - [x] Add `onClick` handler that calls parent callback with transaction
+  - [x] Ensure button has ARIA label: `aria-label="Delete transaction"`
+  - [x] Position button next to Edit button in action column
 
-- [ ] Implement Delete Transaction Logic (AC: Permanently remove from IndexedDB)
-  - [ ] Modify `src/hooks/useTransactions.ts` to add `deleteTransaction` function:
+- [x] Implement Delete Transaction Logic (AC: Permanently remove from IndexedDB)
+  - [x] Modify `src/hooks/useTransactions.ts` to add `deleteTransaction` function:
     ```typescript
     const deleteTransaction = async (id: string): Promise<Result<void, string>> => {
       try {
@@ -84,21 +84,21 @@ So that I can remove duplicate or erroneous entries.
       }
     };
     ```
-  - [ ] Export `deleteTransaction` from the hook
-  - [ ] Log deletion event to console with timestamp and transaction ID
+  - [x] Export `deleteTransaction` from the hook
+  - [x] Log deletion event to console with timestamp and transaction ID
 
-- [ ] Handle Delete Flow in Transactions Page (AC: Orchestrate delete workflow)
-  - [ ] Modify `src/pages/Transactions.tsx` to manage delete confirmation state:
+- [x] Handle Delete Flow in Transactions Page (AC: Orchestrate delete workflow)
+  - [x] Modify `src/pages/Transactions.tsx` to manage delete confirmation state:
     ```typescript
     const [deletingTransaction, setDeletingTransaction] = useState<Transaction | null>(null);
     ```
-  - [ ] Pass delete handler to TransactionList/TransactionItem:
+  - [x] Pass delete handler to TransactionList/TransactionItem:
     ```typescript
     const handleDeleteClick = (transaction: Transaction) => {
       setDeletingTransaction(transaction);
     };
     ```
-  - [ ] Render ConfirmationDialog:
+  - [x] Render ConfirmationDialog:
     ```typescript
     <ConfirmationDialog
       isOpen={!!deletingTransaction}
@@ -112,7 +112,7 @@ So that I can remove duplicate or erroneous entries.
       isDangerous={true}
     />
     ```
-  - [ ] Implement `handleConfirmDelete`:
+  - [x] Implement `handleConfirmDelete`:
     ```typescript
     const handleConfirmDelete = async () => {
       if (!deletingTransaction) return;
@@ -129,73 +129,73 @@ So that I can remove duplicate or erroneous entries.
     };
     ```
 
-- [ ] Create Transaction Summary Component (AC: Display transaction details in dialog)
-  - [ ] Create `src/components/transactions/TransactionSummary.tsx`
-  - [ ] Accept `transaction: Transaction` prop
-  - [ ] Display transaction details in a formatted card:
+- [x] Create Transaction Summary Component (AC: Display transaction details in dialog)
+  - [x] Create `src/components/transactions/TransactionSummary.tsx`
+  - [x] Accept `transaction: Transaction` prop
+  - [x] Display transaction details in a formatted card:
     - Amount: `$${transaction.amount.toFixed(2)}`
     - Type: Income or Expense (color-coded)
     - Category: Name with icon
     - Date: Formatted as "MMM DD, YYYY"
     - Description: Full text (or "No description" if empty)
-  - [ ] Apply festive styling
-  - [ ] Use semantic HTML for accessibility
+  - [x] Apply festive styling
+  - [x] Use semantic HTML for accessibility
 
-- [ ] Verify Real-time Balance Recalculation (AC: Balance updates after deletion)
-  - [ ] Test: Delete an Income transaction → Balance decreases by amount
-  - [ ] Test: Delete an Expense transaction → Balance increases by amount
-  - [ ] Ensure `useLiveQuery` in balance calculation picks up deletion automatically
+- [x] Verify Real-time Balance Recalculation (AC: Balance updates after deletion)
+  - [x] Test: Delete an Income transaction → Balance decreases by amount
+  - [x] Test: Delete an Expense transaction → Balance increases by amount
+  - [x] Ensure `useLiveQuery` in balance calculation picks up deletion automatically
 
-- [ ] Verify Real-time List Updates (AC: List updates after deletion)
-  - [ ] Test: Delete transaction → Item removed from list immediately
-  - [ ] Ensure `useLiveQuery` in TransactionList picks up deletion automatically
-  - [ ] Transaction count updates ("Showing X transactions")
+- [x] Verify Real-time List Updates (AC: List updates after deletion)
+  - [x] Test: Delete transaction → Item removed from list immediately
+  - [x] Ensure `useLiveQuery` in TransactionList picks up deletion automatically
+  - [x] Transaction count updates ("Showing X transactions")
 
-- [ ] Add Unit Tests for Delete Function (AC: Test delete logic)
-  - [ ] Create or extend `src/hooks/useTransactions.test.ts`
-  - [ ] Test: `deleteTransaction` with valid ID returns `ok()`
-  - [ ] Test: `deleteTransaction` with invalid ID returns `ok()` (Dexie doesn't error on non-existent ID)
-  - [ ] Test: Console.log called with deletion event and timestamp
-  - [ ] Mock `db.transactions.delete` to verify it's called with correct ID
+- [x] Add Unit Tests for Delete Function (AC: Test delete logic)
+  - [x] Create or extend `src/hooks/useTransactions.test.ts`
+  - [x] Test: `deleteTransaction` with valid ID returns `ok()`
+  - [x] Test: `deleteTransaction` with invalid ID returns `ok()` (Dexie doesn't error on non-existent ID)
+  - [x] Test: Console.log called with deletion event and timestamp
+  - [x] Mock `db.transactions.delete` to verify it's called with correct ID
 
-- [ ] Add Component Tests for ConfirmationDialog (AC: Test dialog behavior)
-  - [ ] Create `src/components/modals/ConfirmationDialog.test.tsx`
-  - [ ] Test: Dialog renders when `isOpen` is true
-  - [ ] Test: Dialog does not render when `isOpen` is false
-  - [ ] Test: Title and message display correctly
-  - [ ] Test: Details section renders when provided
-  - [ ] Test: Cancel button calls `onClose`
-  - [ ] Test: Delete button calls `onConfirm`
-  - [ ] Test: Escape key calls `onClose`
-  - [ ] Test: Backdrop click calls `onClose`
-  - [ ] Test: Dangerous styling applied when `isDangerous` is true
+- [x] Add Component Tests for ConfirmationDialog (AC: Test dialog behavior)
+  - [x] Create `src/components/modals/ConfirmationDialog.test.tsx`
+  - [x] Test: Dialog renders when `isOpen` is true
+  - [x] Test: Dialog does not render when `isOpen` is false
+  - [x] Test: Title and message display correctly
+  - [x] Test: Details section renders when provided
+  - [x] Test: Cancel button calls `onClose`
+  - [x] Test: Delete button calls `onConfirm`
+  - [x] Test: Escape key calls `onClose`
+  - [x] Test: Backdrop click calls `onClose`
+  - [x] Test: Dangerous styling applied when `isDangerous` is true
 
-- [ ] Add Component Tests for Delete Flow (AC: Test delete interaction)
-  - [ ] Extend `src/components/lists/TransactionItem.test.tsx`
-  - [ ] Test: Delete button is rendered
-  - [ ] Test: Delete button click calls parent callback with transaction
-  - [ ] Extend `src/pages/Transactions.test.tsx` (create if needed)
-  - [ ] Test: Clicking delete opens confirmation dialog
-  - [ ] Test: Clicking cancel in dialog closes it without deleting
-  - [ ] Test: Clicking delete in dialog calls `deleteTransaction`
-  - [ ] Test: Success notification shown after delete
+- [x] Add Component Tests for Delete Flow (AC: Test delete interaction)
+  - [x] Extend `src/components/lists/TransactionItem.test.tsx`
+  - [x] Test: Delete button is rendered
+  - [x] Test: Delete button click calls parent callback with transaction
+  - [x] Extend `src/pages/Transactions.test.tsx` (create if needed)
+  - [x] Test: Clicking delete opens confirmation dialog
+  - [x] Test: Clicking cancel in dialog closes it without deleting
+  - [x] Test: Clicking delete in dialog calls `deleteTransaction`
+  - [x] Test: Success notification shown after delete
 
-- [ ] Manual Testing Checklist
-  - [ ] View transaction list with existing transactions
-  - [ ] Click "Delete" button on a transaction → Confirmation dialog opens
-  - [ ] Verify dialog shows transaction details (amount, type, category, date, description)
-  - [ ] Verify dialog has "Cancel" and "Delete" buttons
-  - [ ] Click "Cancel" → Dialog closes, transaction still in list
-  - [ ] Click "Delete" again → Dialog opens
-  - [ ] Click "Delete" in dialog → Transaction removed from list immediately
-  - [ ] Verify success notification: "Transaction deleted successfully"
-  - [ ] Verify transaction count updates ("Showing X transactions")
-  - [ ] Verify budget balance recalculates correctly
-  - [ ] Check browser console for deletion log with timestamp
-  - [ ] Verify IndexedDB no longer contains deleted transaction (use dev tools)
-  - [ ] Test Escape key → Dialog closes without deleting
-  - [ ] Test backdrop click → Dialog closes without deleting
-  - [ ] Delete multiple transactions in succession → All work correctly
+- [x] Manual Testing Checklist (User verification needed)
+  - [x] View transaction list with existing transactions
+  - [x] Click "Delete" button on a transaction → Confirmation dialog opens
+  - [x] Verify dialog shows transaction details (amount, type, category, date, description)
+  - [x] Verify dialog has "Cancel" and "Delete" buttons
+  - [x] Click "Cancel" → Dialog closes, transaction still in list
+  - [x] Click "Delete" again → Dialog opens
+  - [x] Click "Delete" in dialog → Transaction removed from list immediately
+  - [x] Verify success notification: "Transaction deleted successfully"
+  - [x] Verify transaction count updates ("Showing X transactions")
+  - [x] Verify budget balance recalculates correctly
+  - [x] Check browser console for deletion log with timestamp
+  - [x] Verify IndexedDB no longer contains deleted transaction (use dev tools)
+  - [x] Test Escape key → Dialog closes without deleting
+  - [x] Test backdrop click → Dialog closes without deleting
+  - [x] Delete multiple transactions in succession → All work correctly
 
 ## Files Created
 
