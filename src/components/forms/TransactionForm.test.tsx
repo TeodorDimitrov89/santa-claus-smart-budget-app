@@ -61,7 +61,9 @@ describe('TransactionForm', () => {
     const categorySelect = screen.getByLabelText(/category/i);
     await userEvent.selectOptions(categorySelect, 'Gifts');
 
-    // Date should default to today, so it's already valid
+    // Select date
+    const dateInput = screen.getByLabelText(/date/i);
+    await userEvent.type(dateInput, '2025-12-25');
 
     const submitButton = screen.getByRole('button', {
       name: /save transaction/i,
@@ -87,6 +89,9 @@ describe('TransactionForm', () => {
 
     // Select category
     await userEvent.selectOptions(screen.getByLabelText(/category/i), 'Gifts');
+
+    // Select date
+    await userEvent.type(screen.getByLabelText(/date/i), '2025-12-25');
 
     // Add description
     await userEvent.type(

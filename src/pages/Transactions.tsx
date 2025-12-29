@@ -1,26 +1,40 @@
 import { useState } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../lib/db';
+import { calculateBalance } from '../lib/budget';
 import { TransactionModal } from '../components/modals/TransactionModal';
-import { useTransactions } from '../hooks/useTransactions';
+import { TransactionList } from '../components/lists/TransactionList';
+import { TransactionFilters } from '../components/filters/TransactionFilters';
+import { useTransactionFilters } from '../hooks/useTransactionFilters';
 
 export default function Transactions() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { transactions, isLoading } = useTransactions();
+
+  // Fetch all transactions for balance calculation
+  const allTransactions = useLiveQuery(() => db.transactions.toArray());
+
+  // Use filter hook
+  const { filters, setFilters, filteredTransactions, clearFilters, hasActiveFilters } =
+    useTransactionFilters();
 
   const handleSuccess = (message: string) => {
     setSuccessMessage(message);
     setErrorMessage('');
-    // Clear success message after 3 seconds
     setTimeout(() => setSuccessMessage(''), 3000);
   };
 
   const handleError = (error: string) => {
     setErrorMessage(error);
     setSuccessMessage('');
-    // Clear error message after 5 seconds
     setTimeout(() => setErrorMessage(''), 5000);
   };
+
+  // Calculate balance from ALL transactions (ignoring filters)
+  const balance = calculateBalance(allTransactions || []);
+  const balanceColor =
+    balance > 0 ? 'text-green-600' : balance < 0 ? 'text-red-600' : 'text-yellow-600';
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -29,10 +43,7 @@ export default function Transactions() {
         <h1 className="text-4xl font-heading text-christmas-green">
           📋 Transactions
         </h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="festive-button"
-        >
+        <button onClick={() => setIsModalOpen(true)} className="festive-button">
           + Add Transaction
         </button>
       </div>
@@ -40,9 +51,7 @@ export default function Transactions() {
       {/* Success/Error Notifications */}
       {successMessage && (
         <div className="mb-4 p-4 bg-christmas-green/10 border-2 border-christmas-green rounded-lg">
-          <p className="text-christmas-green font-semibold">
-            ✅ {successMessage}
-          </p>
+          <p className="text-christmas-green font-semibold">✅ {successMessage}</p>
         </div>
       )}
 
@@ -52,59 +61,28 @@ export default function Transactions() {
         </div>
       )}
 
-      {/* Transaction List - Placeholder for Story 2.2 */}
+      {/* Budget Balance Card */}
+      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 className="text-sm font-medium text-gray-500 mb-2">Current Balance</h2>
+        <p className={`text-4xl font-bold ${balanceColor}`}>
+          ${Math.abs(balance).toFixed(2)}
+        </p>
+        <p className="text-sm text-gray-400 mt-2">
+          {balance >= 0 ? 'On budget' : 'Over budget'}
+        </p>
+      </div>
+
+      {/* Filters */}
+      <TransactionFilters
+        filters={filters}
+        setFilters={setFilters}
+        clearFilters={clearFilters}
+        hasActiveFilters={hasActiveFilters}
+      />
+
+      {/* Transaction List */}
       <div className="festive-card">
-        {isLoading ? (
-          <p className="text-gray-500 text-center py-8">Loading transactions...</p>
-        ) : transactions.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-500 mb-2">No transactions yet</p>
-            <p className="text-sm text-gray-400">
-              Click "Add Transaction" to get started
-            </p>
-          </div>
-        ) : (
-          <div>
-            <p className="text-sm text-gray-600 mb-4">
-              Showing {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
-            </p>
-            {/* Transaction list implementation in Story 2.2 */}
-            <div className="space-y-2">
-              {transactions.map((transaction) => (
-                <div
-                  key={transaction.id}
-                  className="p-3 border-2 border-gray-200 rounded-lg hover:border-christmas-red/30 transition-colors"
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <p className="font-semibold">
-                        {transaction.description || '(No description)'}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {transaction.category} •{' '}
-                        {new Date(transaction.date).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                        })}
-                      </p>
-                    </div>
-                    <p
-                      className={`text-lg font-bold ${
-                        transaction.type === 'Income'
-                          ? 'text-christmas-green'
-                          : 'text-christmas-red'
-                      }`}
-                    >
-                      {transaction.type === 'Income' ? '+' : '-'}$
-                      {transaction.amount.toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <TransactionList transactions={filteredTransactions} />
       </div>
 
       {/* Transaction Modal */}

@@ -363,3 +363,12 @@ let's skip the epic-1-retrospective mark the epic 1 as done and log the prompts 
 
 ### Prompt 47
 you can mark Manual Testing Checklist as done. I tested it
+
+### Prompt 48
+/bmad:bmm:agents:sm
+
+### Prompt 49
+/bmad:bmm:agents:dev
+
+### Prompt 50
+Execute Dev Story workflow (full BMM path with sprint-status)

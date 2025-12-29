@@ -25,7 +25,6 @@ export const TransactionForm = ({
     resolver: zodResolver(transactionSchema),
     mode: 'onChange', // Real-time validation
     defaultValues: {
-      date: new Date(),
       description: '',
     },
   });
