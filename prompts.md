@@ -579,3 +579,25 @@ To be determined during Solutioning phase.
 Instructions will be provided during the implementation phase.
 in @README.md
 
+### Prompt 110
+
+/bmad:bmm:agents:sm
+
+### Prompt 111
+
+/bmad:bmm:workflows:sprint-status
+
+### Prompt 112
+
+/bmad:bmm:workflows:retrospective
+
+### Prompt 113
+
+Generate a single md file covering the whole project (Epics 1-3).
+No roleplay/dialogue.
+Highlight the decision to focus on core logic and 283 tests while deferring full E2E Playwright coverage to manage the token budget.
+Summarize the technical success of the Dexie.js + Recharts integration."
+
+### Prompt 114
+
+update bmm-workflow-status.yaml as the retrospective is completed
