@@ -568,4 +568,14 @@ Execute Dev Story workflow (*dev-story) - Full BMM path with sprint-status
 
 ### Prompt 108
 
-check @_bmad-output/code-review-report-3-6.md  
+check @_bmad-output/code-review-report-3-6.md
+
+### Prompt 109
+
+I need you to update
+1. ### Tech Stack
+To be determined during Solutioning phase.
+2. ## How to Run
+Instructions will be provided during the implementation phase.
+in @README.md
+
