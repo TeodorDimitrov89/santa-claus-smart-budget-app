@@ -41,6 +41,17 @@ export interface PieChartData {
 }
 
 /**
+ * Bar chart data format for Recharts BarChart
+ * [FR-008: Visual Charts - Bar Chart]
+ */
+export interface BarChartData {
+  category: Category; // Category name
+  amount: number; // Total expense amount for category
+  color: string; // Hex color for bar
+  fill: string; // Alias for color (Recharts uses 'fill' property)
+}
+
+/**
  * Form data for transaction input
  * Used by TransactionForm component
  */

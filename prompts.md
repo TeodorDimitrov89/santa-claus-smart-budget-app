@@ -512,3 +512,29 @@ Execute Dev Story workflow (full BMM path with sprint-status)
 ### Prompt 91
 No issues found for this story.
 
+### Prompt 92
+/bmad:bmm:agents:sm
+
+### Prompt 93
+Create Story (Required to prepare stories for development)
+
+### Prompt 94
+Validate Story (Highly Recommended, use fresh context and different LLM for best results) (GEMINI)
+
+### Prompt 95
+ all - Apply all suggested improvements
+
+### Prompt 96
+/bmad:bmm:agents:dev
+
+### Prompt 97
+Execute Dev Story workflow (full BMM path with sprint-status)
+
+### Prompt 98
+Perform a thorough clean context code review (Highly Recommended, use fresh context and different LLM) (*code-review) (GEMINI)
+
+### Prompt 99
+Create action items - Add to story Tasks/Subtasks for later (GEMINI)
+
+### Prompt 100
+Check Review Follow-ups (AI) in story 3-5-bar-chart-for-category-comparison.md

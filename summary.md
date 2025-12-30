@@ -48,6 +48,7 @@
 - Story 3.2: Color-coded balance status indicators with accessibility (163 tests passing)
 - Story 3.3: Category aggregations and analysis with filtering (210 tests passing)
 - Story 3.4: Pie chart for spending distribution with Recharts (228 tests passing)
+- Story 3.5: Bar chart for category comparison with empty state handling (245 tests passing)
 
 ---
 
@@ -59,14 +60,15 @@
 - UX Design document with Christmas theme and wireframes
 - Architecture document (793 lines) with 100% functional approach
 - All story specifications with comprehensive dev notes
-- All implemented code for Stories 1.1-1.6, 2.1-2.5, 3.1-3.4
-- Test suites (228 tests passing)
+- All implemented code for Stories 1.1-1.6, 2.1-2.5, 3.1-3.5
+- Test suites (245 tests passing)
 - Category helper utilities and comprehensive test coverage
 - Budget calculation utilities and currency formatting
 - BudgetBalanceCard component with color-coded status indicators and accessibility
 - Category aggregation system with pure functions and memoization
 - CategoryAggregationTable component with sorting and click-to-filter
 - SpendingPieChart component with donut style, interactive tooltips, and festive colors
+- CategoryBarChart component with all 6 categories, grid lines, empty state, and responsive design
 
 ### Modified
 - README.md: Removed storytelling, kept technical focus
@@ -96,7 +98,7 @@
 ### Quality Impact
 - **Architecture Enforcement**: 100% functional constraint maintained (no classes except Dexie)
 - **Comprehensive Documentation**: Each story includes 200-400 lines of dev notes with code examples
-- **Test Coverage**: 228/228 tests passing (100% success rate)
+- **Test Coverage**: 245/245 tests passing (100% success rate)
 - **Version Control**: Adversarial code review caught version drift before integration
 - **Accessibility**: Proper ARIA attributes, keyboard navigation, screen reader support
 - **Real-time Reactivity**: useLiveQuery ensures instant UI updates on database changes
@@ -318,3 +320,24 @@
 - SpendingPieChart.test.tsx: Removed unused label parameter from Pie mock
 - Dashboard.test.tsx: Fixed 6 instances of useTransactions mock to match actual hook signature (removed non-existent createTransaction/updateTransaction/deleteTransaction properties)
 **Outcome**: Build successful, all 228 tests passing, TypeScript strict mode compliance maintained
+
+### Problem 31: Story 3.5 Bar Chart Implementation
+**Issue**: Need to visualize category spending comparison with bar chart showing all 6 categories
+**Solution**: Extended chart-data.ts with transformToBarChartData(), created CategoryBarChart component with Recharts
+**Implementation**:
+- Pure function: transformToBarChartData(transactions, sortByAmount) in src/lib/chart-data.ts
+- Component: CategoryBarChart.tsx with ResponsiveContainer, BarChart, Bar with Cell coloring
+- Recharts features: XAxis (angled labels), YAxis (dollar formatting), Tooltip (custom formatter), CartesianGrid
+- Data optimization: useMemo for chart data transformation
+- All 6 categories included: Gifts, Food & Dinner, Decorations, Travel, Charity, Santa's Workshop
+- Test suite: 17 new tests (6 unit for data transformation, 6 component, 5 integration)
+**Outcome**: 245 tests passing, all ACs met, responsive bar chart with festive colors
+
+### Problem 32: Code Review Follow-ups for Story 3.5
+**Issue**: AI code review identified missing empty state functionality (1 CRITICAL, 1 MEDIUM priority)
+**Solutions**:
+- Empty State Implementation: Added hasAnyExpenses check to CategoryBarChart.tsx following story skeleton
+- Festive Empty State: Implemented friendly message with 📊 emoji when all categories have $0 expenses
+- Test Fix #1: Updated "should render empty state when no transactions" to assert empty state message
+- Test Fix #2: Updated "should render empty state for income-only transactions" to assert empty state message
+**Outcome**: All 245 tests passing, empty state correctly displays instead of $0 bars, tests validate correct behavior

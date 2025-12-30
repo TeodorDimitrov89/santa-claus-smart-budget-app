@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { transformToPieChartData } from './chart-data';
+import { transformToPieChartData, transformToBarChartData } from './chart-data';
 import type { Transaction } from '../types';
 
 describe('transformToPieChartData', () => {
@@ -156,5 +156,243 @@ describe('transformToPieChartData', () => {
     expect(result[0].percentage).toBe(60); // 60/100
     expect(result[1].percentage).toBe(30); // 30/100
     expect(result[2].percentage).toBe(10); // 10/100
+  });
+});
+
+describe('transformToBarChartData', () => {
+  it('should return 6 categories with $0 for empty transactions', () => {
+    const result = transformToBarChartData([]);
+
+    expect(result).toHaveLength(6);
+    expect(result.every(item => item.amount === 0)).toBe(true);
+    expect(result.every(item => item.color)).toBeDefined();
+    expect(result.every(item => item.fill)).toBeDefined();
+
+    // Verify all 6 categories are present
+    const categories = result.map(item => item.category);
+    expect(categories).toContain('Gifts');
+    expect(categories).toContain('Food & Dinner');
+    expect(categories).toContain('Decorations');
+    expect(categories).toContain('Travel');
+    expect(categories).toContain('Charity');
+    expect(categories).toContain("Santa's Workshop");
+  });
+
+  it('should return 6 categories with $0 expenses for income-only transactions', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 50,
+        type: 'Income',
+        category: 'Charity',
+        date: new Date(),
+        description: 'Donation received',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    const result = transformToBarChartData(transactions);
+
+    expect(result).toHaveLength(6);
+    expect(result.every(item => item.amount === 0)).toBe(true);
+  });
+
+  it('should show correct amounts per category for expenses-only', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift 1',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 50,
+        type: 'Expense',
+        category: 'Food & Dinner',
+        date: new Date(),
+        description: 'Dinner',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '3',
+        amount: 75,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift 2',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    const result = transformToBarChartData(transactions);
+
+    expect(result).toHaveLength(6);
+
+    const gifts = result.find(item => item.category === 'Gifts');
+    expect(gifts?.amount).toBe(175); // 100 + 75
+
+    const food = result.find(item => item.category === 'Food & Dinner');
+    expect(food?.amount).toBe(50);
+
+    const decorations = result.find(item => item.category === 'Decorations');
+    expect(decorations?.amount).toBe(0);
+  });
+
+  it('should filter expenses correctly for mixed transactions', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift purchase',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 200,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '3',
+        amount: 50,
+        type: 'Expense',
+        category: 'Food & Dinner',
+        date: new Date(),
+        description: 'Dinner',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    const result = transformToBarChartData(transactions);
+
+    expect(result).toHaveLength(6);
+
+    const gifts = result.find(item => item.category === 'Gifts');
+    expect(gifts?.amount).toBe(100); // Only expense, not income
+
+    const food = result.find(item => item.category === 'Food & Dinner');
+    expect(food?.amount).toBe(50);
+  });
+
+  it('should preserve original order when sortByAmount is false', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 10,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Small gift',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 100,
+        type: 'Expense',
+        category: 'Charity',
+        date: new Date(),
+        description: 'Large donation',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    const result = transformToBarChartData(transactions, false);
+
+    expect(result).toHaveLength(6);
+
+    // Verify order matches CATEGORIES constant order
+    expect(result[0].category).toBe('Gifts');
+    expect(result[1].category).toBe('Food & Dinner');
+    expect(result[2].category).toBe('Decorations');
+    expect(result[3].category).toBe('Travel');
+    expect(result[4].category).toBe('Charity');
+    expect(result[5].category).toBe("Santa's Workshop");
+  });
+
+  it('should sort by amount descending when sortByAmount is true', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 10,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Small gift',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 100,
+        type: 'Expense',
+        category: 'Charity',
+        date: new Date(),
+        description: 'Large donation',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '3',
+        amount: 50,
+        type: 'Expense',
+        category: 'Food & Dinner',
+        date: new Date(),
+        description: 'Dinner',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    const result = transformToBarChartData(transactions, true);
+
+    expect(result).toHaveLength(6);
+
+    // Verify descending order by amount
+    expect(result[0].category).toBe('Charity');
+    expect(result[0].amount).toBe(100);
+    expect(result[1].category).toBe('Food & Dinner');
+    expect(result[1].amount).toBe(50);
+    expect(result[2].category).toBe('Gifts');
+    expect(result[2].amount).toBe(10);
+
+    // Remaining categories should have $0
+    expect(result[3].amount).toBe(0);
+    expect(result[4].amount).toBe(0);
+    expect(result[5].amount).toBe(0);
+  });
+
+  it('should include color and fill properties for all categories', () => {
+    const result = transformToBarChartData([]);
+
+    expect(result).toHaveLength(6);
+    result.forEach(item => {
+      expect(item.color).toBeDefined();
+      expect(item.color).toMatch(/^#[0-9A-Fa-f]{6}$/); // Valid hex color
+      expect(item.fill).toBe(item.color); // fill should match color
+    });
   });
 });

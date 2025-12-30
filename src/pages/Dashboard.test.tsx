@@ -21,6 +21,14 @@ vi.mock('../components/charts/SpendingPieChart', () => ({
   ),
 }));
 
+vi.mock('../components/charts/CategoryBarChart', () => ({
+  CategoryBarChart: ({ transactions }: { transactions: Transaction[] }) => (
+    <div data-testid="category-bar-chart">
+      Bar chart with {transactions.length} transactions
+    </div>
+  ),
+}));
+
 import { useTransactions } from '../hooks/useTransactions';
 
 describe('Dashboard', () => {
@@ -84,7 +92,8 @@ describe('Dashboard', () => {
     });
 
     render(<Dashboard />);
-    expect(screen.getByText(/Chart with 2 transactions/i)).toBeInTheDocument();
+    const pieChart = screen.getByTestId('spending-pie-chart');
+    expect(pieChart).toHaveTextContent('Chart with 2 transactions');
   });
 
   it('should handle empty transactions gracefully', () => {
@@ -94,7 +103,8 @@ describe('Dashboard', () => {
     });
 
     render(<Dashboard />);
-    expect(screen.getByText(/Chart with 0 transactions/i)).toBeInTheDocument();
+    const pieChart = screen.getByTestId('spending-pie-chart');
+    expect(pieChart).toHaveTextContent('Chart with 0 transactions');
   });
 
   it('should render Spending Distribution section heading', () => {
@@ -105,5 +115,35 @@ describe('Dashboard', () => {
 
     render(<Dashboard />);
     expect(screen.getByText(/Spending Distribution/i)).toBeInTheDocument();
+  });
+
+  it('should render CategoryBarChart component', () => {
+    vi.mocked(useTransactions).mockReturnValue({
+      transactions: mockTransactions,
+      isLoading: false,
+    });
+
+    render(<Dashboard />);
+    expect(screen.getByTestId('category-bar-chart')).toBeInTheDocument();
+  });
+
+  it('should pass transactions to CategoryBarChart', () => {
+    vi.mocked(useTransactions).mockReturnValue({
+      transactions: mockTransactions,
+      isLoading: false,
+    });
+
+    render(<Dashboard />);
+    expect(screen.getByText(/Bar chart with 2 transactions/i)).toBeInTheDocument();
+  });
+
+  it('should render Category Comparison section heading', () => {
+    vi.mocked(useTransactions).mockReturnValue({
+      transactions: mockTransactions,
+      isLoading: false,
+    });
+
+    render(<Dashboard />);
+    expect(screen.getByText(/Category Comparison/i)).toBeInTheDocument();
   });
 });
