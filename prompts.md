@@ -487,3 +487,28 @@ Create action items - Add to story Tasks/Subtasks for later. (GEMINI)
 
 ### Prompt 84
 check again the story @_bmad-output/stories/3-3-category-aggregations-and-analysis.md  and check Review Follow-ups (AI)
+
+### Prompt 85
+/bmad:bmm:agents:sm
+
+### Prompt 86
+
+Create Story (Required to prepare stories for development)
+
+### Propmpt 87
+
+Validate Story (GEMINI)
+
+### Prompt 88
+all - Apply all suggested improvements (GEMINI)
+
+### Prompt 89
+/bmad:bmm:agents:dev
+
+### Prompt 90
+
+Execute Dev Story workflow (full BMM path with sprint-status)
+
+### Prompt 91
+No issues found for this story.
+

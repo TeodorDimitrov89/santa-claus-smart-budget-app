@@ -30,6 +30,17 @@ export interface Transaction {
 }
 
 /**
+ * Pie chart data format for Recharts
+ * [FR-008: Visual Charts - Pie Chart]
+ */
+export interface PieChartData {
+  name: Category; // Category name
+  value: number; // Total expense amount for category
+  color: string; // Hex color for slice
+  percentage: number; // Percentage of total expenses
+}
+
+/**
  * Form data for transaction input
  * Used by TransactionForm component
  */
