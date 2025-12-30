@@ -6,7 +6,7 @@
 
 **Project:** Santa's Smart Budget App
 **Author:** Teodor Dimitrov
-**Date Range:** 2025-12-24 to 2025-12-29
+**Date Range:** 2025-12-24 to 2025-12-30
 
 ---
 
@@ -33,7 +33,7 @@
 - Epics and user stories generation
 - Implementation readiness assessment
 
-### Phase 4: Implementation (2025-12-27 to 2025-12-29)
+### Phase 4: Implementation (2025-12-27 to 2025-12-30)
 - Sprint planning and status tracking setup
 - Story 1.1: Vite project initialization
 - Story 1.2: Core dependencies installation and Tailwind configuration
@@ -53,6 +53,14 @@
 - Story 3.3: Category aggregations and analysis with filtering (210 tests passing)
 - Story 3.4: Pie chart for spending distribution with Recharts (228 tests passing)
 - Story 3.5: Bar chart for category comparison with empty state handling (245 tests passing)
+- Story 3.6: Interactive chart features and toggle views with accessibility (283 tests passing)
+
+### Phase 5: Retrospective (2025-12-30)
+- Project retrospective document generation
+- Complete review of all 3 epics (17 stories, 283 tests)
+- Token budget strategy documentation
+- Dexie.js + Recharts integration analysis
+- Lessons learned and recommendations
 
 ---
 
@@ -64,15 +72,18 @@
 - UX Design document with Christmas theme and wireframes
 - Architecture document (793 lines) with 100% functional approach
 - All story specifications with comprehensive dev notes
-- All implemented code for Stories 1.1-1.6, 2.1-2.5, 3.1-3.5
-- Test suites (245 tests passing)
+- All implemented code for Stories 1.1-1.6, 2.1-2.5, 3.1-3.6
+- Test suites (283 tests passing)
 - Category helper utilities and comprehensive test coverage
 - Budget calculation utilities and currency formatting
 - BudgetBalanceCard component with color-coded status indicators and accessibility
 - Category aggregation system with pure functions and memoization
 - CategoryAggregationTable component with sorting and click-to-filter
-- SpendingPieChart component with donut style, interactive tooltips, and festive colors
-- CategoryBarChart component with all 6 categories, grid lines, empty state, and responsive design
+- SpendingPieChart component with donut style, interactive tooltips, festive colors, and click-to-highlight
+- CategoryBarChart component with all 6 categories, grid lines, empty state, click-to-filter, and responsive design
+- ChartViewToggle component for Income/Expense switching with keyboard navigation
+- CategorySortToggle component for bar chart sorting control
+- Project retrospective document covering all 3 epics
 
 ### Modified
 - README.md: Removed storytelling, kept technical focus
@@ -102,14 +113,15 @@
 ### Quality Impact
 - **Architecture Enforcement**: 100% functional constraint maintained (no classes except Dexie)
 - **Comprehensive Documentation**: Each story includes 200-400 lines of dev notes with code examples
-- **Test Coverage**: 245/245 tests passing (100% success rate)
+- **Test Coverage**: 283/283 tests passing (100% success rate)
 - **Version Control**: Adversarial code review caught version drift before integration
-- **Accessibility**: Proper ARIA attributes, keyboard navigation, screen reader support
+- **Accessibility**: Proper ARIA attributes, keyboard navigation, screen reader support, aria-live announcements
 - **Real-time Reactivity**: useLiveQuery ensures instant UI updates on database changes
 - **Single Source of Truth**: CATEGORIES constant with helper utilities prevents data duplication
 - **Performance Optimization**: useMemo prevents unnecessary budget and aggregation recalculations
 - **Dependency Injection**: Transaction data passed as props for maximum flexibility
 - **Pure Functions**: All aggregation logic implemented as testable pure functions
+- **Interactive Charts**: Click-to-highlight pie slices, click-to-filter bar charts with visual feedback
 
 ---
 

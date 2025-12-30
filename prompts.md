@@ -601,3 +601,7 @@ Summarize the technical success of the Dexie.js + Recharts integration."
 ### Prompt 114
 
 update bmm-workflow-status.yaml as the retrospective is completed
+
+### Prompt 115
+
+I want you to update Project Structure in README.md with the final project structure.
