@@ -1,5 +1,9 @@
 # AI Impact Summary - Santa's Smart Budget App
 
+**Note on AI Strategy:** All application code was developed using **Claude**, while all code review and validation were conducted using **Gemini**.
+
+---
+
 **Project:** Santa's Smart Budget App
 **Author:** Teodor Dimitrov
 **Date Range:** 2025-12-24 to 2025-12-29
