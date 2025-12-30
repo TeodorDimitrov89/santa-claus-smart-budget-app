@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   PieChart,
   Pie,
@@ -12,39 +12,49 @@ import type { Transaction } from '../../types';
 
 /**
  * Spending Pie Chart Component (Donut style)
- * Displays expense distribution across categories
+ * Displays expense or income distribution across categories
  * [FR-008: Visual Charts - Pie Chart]
- * [AC: Donut style, interactive tooltip, legend, responsive, festive theme]
+ * [Story 3.6: Extended to support income view and slice highlighting]
+ * [AC: Donut style, interactive tooltip, legend, responsive, festive theme, clickable slices]
  */
 
 interface Props {
   transactions: Transaction[];
+  view?: 'income' | 'expense';
 }
 
-export const SpendingPieChart = ({ transactions }: Props) => {
+export const SpendingPieChart = ({ transactions, view = 'expense' }: Props) => {
+  const [highlightedSlice, setHighlightedSlice] = useState<string | null>(null);
+
   // Memoize chart data transformation (performance optimization)
   const chartData = useMemo(
-    () => transformToPieChartData(transactions),
-    [transactions]
+    () => transformToPieChartData(transactions, view),
+    [transactions, view]
   );
 
-  // Empty state when no expense data
+  // Empty state when no data
   if (chartData.length === 0) {
     return (
       <div className="text-center py-8">
         <div className="text-6xl mb-4">📊</div>
         <p className="text-gray-600 text-lg">
-          No expense data available for chart
+          No {view} data available for chart
         </p>
         <p className="text-gray-500 text-sm mt-2">
-          Add some expense transactions to see your spending distribution
+          Add some {view} transactions to see your {view === 'expense' ? 'spending' : 'income'} distribution
         </p>
       </div>
     );
   }
 
+  const chartTitle = view === 'expense' ? 'Spending distribution pie chart' : 'Income distribution pie chart';
+
+  const handleSliceClick = (categoryName: string) => {
+    setHighlightedSlice(highlightedSlice === categoryName ? null : categoryName);
+  };
+
   return (
-    <div aria-label="Spending distribution pie chart" role="img">
+    <div aria-label={chartTitle} role="img">
       <ResponsiveContainer width="100%" height={400}>
         <PieChart>
           <Pie
@@ -57,10 +67,21 @@ export const SpendingPieChart = ({ transactions }: Props) => {
             outerRadius={120}
             paddingAngle={2}
             label={(entry) => `${entry.name}: ${entry.percentage}%`}
+            onClick={(data) => handleSliceClick(data.name)}
+            style={{ cursor: 'pointer' }}
           >
-            {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
+            {chartData.map((entry, index) => {
+              const isHighlighted = highlightedSlice === entry.name;
+              return (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry.color}
+                  opacity={highlightedSlice === null || isHighlighted ? 1 : 0.3}
+                  stroke={isHighlighted ? '#FFD700' : 'none'}
+                  strokeWidth={isHighlighted ? 3 : 0}
+                />
+              );
+            })}
           </Pie>
           <Tooltip
             formatter={(value: number, name: string, props) => {

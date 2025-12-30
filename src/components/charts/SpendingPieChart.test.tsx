@@ -125,4 +125,92 @@ describe('SpendingPieChart', () => {
       'Spending distribution pie chart'
     );
   });
+
+  // Story 3.6: Income view tests
+  it('should render income data when view prop is income', () => {
+    const incomeTransactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 50,
+        type: 'Income',
+        category: 'Charity',
+        date: new Date(),
+        description: 'Donation',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    render(<SpendingPieChart transactions={incomeTransactions} view="income" />);
+
+    const pieElement = screen.getByTestId('pie');
+    expect(pieElement).toHaveAttribute('data-items', '2');
+  });
+
+  it('should update chart title for income view', () => {
+    const incomeTransactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    const { container } = render(
+      <SpendingPieChart transactions={incomeTransactions} view="income" />
+    );
+
+    const chartContainer = container.querySelector('[aria-label]');
+    expect(chartContainer).toHaveAttribute(
+      'aria-label',
+      'Income distribution pie chart'
+    );
+  });
+
+  it('should show income empty state message', () => {
+    const expenseOnly: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift purchase',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    render(<SpendingPieChart transactions={expenseOnly} view="income" />);
+
+    expect(screen.getByText(/No income data available for chart/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add some income transactions to see your income distribution/i)).toBeInTheDocument();
+  });
+
+  it('should default to expense view when view prop is omitted', () => {
+    const { container } = render(
+      <SpendingPieChart transactions={mockExpenseTransactions} />
+    );
+
+    const chartContainer = container.querySelector('[aria-label]');
+    expect(chartContainer).toHaveAttribute(
+      'aria-label',
+      'Spending distribution pie chart'
+    );
+  });
 });

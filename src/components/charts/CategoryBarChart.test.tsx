@@ -156,4 +156,98 @@ describe('CategoryBarChart', () => {
       'Category spending comparison bar chart'
     );
   });
+
+  describe('view prop behavior', () => {
+    const mockIncomeTransactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 200,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 150,
+        type: 'Income',
+        category: 'Food & Dinner',
+        date: new Date(),
+        description: 'Food income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    it('should render income data when view prop is income', () => {
+      render(<CategoryBarChart transactions={mockIncomeTransactions} view="income" />);
+
+      // Verify chart renders with income data
+      expect(screen.getByTestId('responsive-container')).toBeInTheDocument();
+      expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
+      const barChart = screen.getByTestId('bar-chart');
+      expect(barChart).toHaveAttribute('data-items', '6');
+    });
+
+    it('should show income empty state when view is income and no income transactions', () => {
+      render(<CategoryBarChart transactions={mockExpenseTransactions} view="income" />);
+
+      // Should show income-specific empty state
+      expect(screen.getByText(/No income data available for chart/i)).toBeInTheDocument();
+      expect(screen.getByText(/Add some income transactions to see category comparison/i)).toBeInTheDocument();
+    });
+
+    it('should update chart title for income view', () => {
+      const { container } = render(
+        <CategoryBarChart transactions={mockIncomeTransactions} view="income" />
+      );
+
+      const chartContainer = container.querySelector('[aria-label]');
+      expect(chartContainer).toHaveAttribute(
+        'aria-label',
+        'Category income comparison bar chart'
+      );
+    });
+
+    it('should default to expense view when view prop is omitted', () => {
+      const { container } = render(
+        <CategoryBarChart transactions={mockExpenseTransactions} />
+      );
+
+      const chartContainer = container.querySelector('[aria-label]');
+      expect(chartContainer).toHaveAttribute(
+        'aria-label',
+        'Category spending comparison bar chart'
+      );
+
+      // Verify expense data renders
+      expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
+    });
+
+    it('should support combinations of view and sortByAmount props', () => {
+      const { rerender } = render(
+        <CategoryBarChart
+          transactions={mockIncomeTransactions}
+          view="income"
+          sortByAmount={false}
+        />
+      );
+
+      expect(screen.getByTestId('bar-chart')).toBeInTheDocument();
+
+      // Re-render with sortByAmount=true
+      rerender(
+        <CategoryBarChart
+          transactions={mockIncomeTransactions}
+          view="income"
+          sortByAmount={true}
+        />
+      );
+
+      const barChart = screen.getByTestId('bar-chart');
+      expect(barChart).toHaveAttribute('data-items', '6');
+    });
+  });
 });

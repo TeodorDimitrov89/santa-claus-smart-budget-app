@@ -395,4 +395,159 @@ describe('transformToBarChartData', () => {
       expect(item.fill).toBe(item.color); // fill should match color
     });
   });
+
+  // Story 3.6: Income type support tests
+  it('should show income data when type is income', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 50,
+        type: 'Income',
+        category: 'Charity',
+        date: new Date(),
+        description: 'Donation received',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    const result = transformToBarChartData(transactions, false, 'income');
+
+    expect(result).toHaveLength(6);
+
+    const gifts = result.find(item => item.category === 'Gifts');
+    expect(gifts?.amount).toBe(100);
+
+    const charity = result.find(item => item.category === 'Charity');
+    expect(charity?.amount).toBe(50);
+
+    const decorations = result.find(item => item.category === 'Decorations');
+    expect(decorations?.amount).toBe(0);
+  });
+
+  it('should default to expense type for backward compatibility', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift purchase',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 200,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    // Call without type parameter - should default to expense
+    const result = transformToBarChartData(transactions);
+
+    const gifts = result.find(item => item.category === 'Gifts');
+    expect(gifts?.amount).toBe(100); // Only expense, not income
+  });
+});
+
+describe('transformToPieChartData with income type', () => {
+  it('should show income data when type is income', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 50,
+        type: 'Income',
+        category: 'Charity',
+        date: new Date(),
+        description: 'Donation received',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    const result = transformToPieChartData(transactions, 'income');
+
+    expect(result).toHaveLength(2); // Only categories with income
+
+    const gifts = result.find(item => item.name === 'Gifts');
+    expect(gifts?.value).toBe(100);
+    expect(gifts?.percentage).toBe(67); // 100/150 rounded
+
+    const charity = result.find(item => item.name === 'Charity');
+    expect(charity?.value).toBe(50);
+    expect(charity?.percentage).toBe(33); // 50/150 rounded
+  });
+
+  it('should default to expense type for backward compatibility', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift purchase',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: '2',
+        amount: 200,
+        type: 'Income',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift income',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    // Call without type parameter - should default to expense
+    const result = transformToPieChartData(transactions);
+
+    expect(result).toHaveLength(1);
+    expect(result[0].value).toBe(100); // Only expense
+    expect(result[0].percentage).toBe(100);
+  });
+
+  it('should return empty array when no income exists', () => {
+    const transactions: Transaction[] = [
+      {
+        id: '1',
+        amount: 100,
+        type: 'Expense',
+        category: 'Gifts',
+        date: new Date(),
+        description: 'Gift purchase',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+    const result = transformToPieChartData(transactions, 'income');
+
+    expect(result).toEqual([]);
+  });
 });

@@ -538,3 +538,34 @@ Create action items - Add to story Tasks/Subtasks for later (GEMINI)
 
 ### Prompt 100
 Check Review Follow-ups (AI) in story 3-5-bar-chart-for-category-comparison.md
+
+### Prompt 101
+
+/bmad:bmm:agents:sm
+
+### Prompt 102
+
+Create Story (*create-story) - Required to prepare stories for development
+
+### Prompt 103
+
+*validate-create-story - Validate Story (Highly Recommended, use fresh context and different LLM for best results) (GEMINI)
+
+### Prompt 104
+/bmad:bmm:agents:dev
+
+### Prompt 105
+
+Execute Dev Story workflow (*dev-story) - Full BMM path with sprint-status
+
+### Prompt 106
+
+*code-review - Perform a thorough clean context code review (Highly Recommended, use fresh context and different LLM) (GEMINI)
+
+### Prompt 107
+
+ Create action items - Add to story Tasks/Subtasks for later (GEMINI)
+
+### Prompt 108
+
+check @_bmad-output/code-review-report-3-6.md  
